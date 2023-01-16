@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import amazon.app.backend.Validator.IsDiscount;
@@ -25,7 +26,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "product")
+@Table(name = "product", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "product_code"})})
 @Entity(name = "Product") 
 public class Product {
     @Id
@@ -49,7 +50,7 @@ public class Product {
     
 
     @NotBlank(message = "productCode cannot be blank")
-    @Column(name = "product_code", nullable = false, unique = true)
+    @Column(name = "product_code", nullable = false)
     private String productCode;
 
     @NotBlank(message = "description cannot be blank")
@@ -82,10 +83,12 @@ public class Product {
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @UpdateTimestamp
     @Column(name = "date_updated")
     private LocalDateTime dateUpdated;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;

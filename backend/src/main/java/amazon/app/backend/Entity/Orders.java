@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
@@ -55,10 +56,12 @@ public class Orders {
     @Column(name = "total_quantity")
     private int totalQuantity;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @CreationTimestamp
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @UpdateTimestamp
     @Column(name = "date_updated")
     private LocalDateTime dateUpdated;

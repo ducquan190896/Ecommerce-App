@@ -59,6 +59,7 @@ public class Users {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Orders> orderList = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Review> reviews = new HashSet<>();
 

@@ -68,6 +68,7 @@ public class Address {
         this.zipCode = zipCode;
         this.isBilling = false;
         this.isShipping = false;
+        
     }
     public Address(String street, String city, String country, String zipCode, Orders order) {
         this.street = street;
@@ -79,7 +80,18 @@ public class Address {
         this.order = order;
     }
 
+    
 
+
+    public Address(String street, String city, String country, String zipCode, boolean isBilling, boolean isShipping, Orders order) {
+        this.street = street;
+        this.city = city;
+        this.country = country;
+        this.zipCode = zipCode;
+        this.isBilling = isBilling;
+        this.isShipping = isShipping;
+        this.order = order;
+    }
     @Override
     public String toString() {
         return "Address [id=" + id + ", street=" + street + ", city=" + city + ", country=" + country + ", zipCode="
