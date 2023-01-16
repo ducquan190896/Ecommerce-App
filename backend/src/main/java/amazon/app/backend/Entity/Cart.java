@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
@@ -53,6 +54,16 @@ public class Cart {
     @Min(value = 0, message = "total quantity of cart cannot be less than 0")
     @Column(name = "total_quantity")
     private int totalQuantity;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm")
+    @CreationTimestamp
+    @Column(name = "date_Created")
+    private LocalDateTime dateCreated;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm")
+    @CreationTimestamp
+    @Column(name = "date_updated")
+    private LocalDateTime dateUpdated;
 
     public Cart(Users user) {
         this.user = user;

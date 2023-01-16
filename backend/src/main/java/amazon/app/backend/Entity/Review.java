@@ -1,4 +1,5 @@
 package amazon.app.backend.Entity;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -6,6 +7,9 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import amazon.app.backend.Validator.RatingSize;
@@ -38,13 +42,23 @@ public class Review {
     @Column(name = "rating")
     private int rating;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Users user;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm")
+    @CreationTimestamp
+    @Column(name = "date_Created")
+    private LocalDateTime dateCreated;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm")
+    @CreationTimestamp
+    @Column(name = "date_updated")
+    private LocalDateTime dateUpdated;
 
     public Review(int rating, Product product, Users user) {
         this.rating = rating;

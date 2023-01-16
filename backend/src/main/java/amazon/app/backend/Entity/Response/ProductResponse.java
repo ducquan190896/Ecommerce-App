@@ -19,9 +19,12 @@ public class ProductResponse {
     private String brandName;
     private String productCode;
     private String categoryName;
+    private boolean active;
+    private double priceDiscounted;
+   
     
     public ProductResponse(Long id, String name, String description, double price, int unitsInStock, String brandName,
-            String productCode, String categoryName) {
+            String productCode, String categoryName, boolean active, double priceDiscounted) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -30,6 +33,8 @@ public class ProductResponse {
         this.brandName = brandName;
         this.productCode = productCode;
         this.categoryName = categoryName;
+        this.active = active;
+        this.priceDiscounted = priceDiscounted;
     }
 
     

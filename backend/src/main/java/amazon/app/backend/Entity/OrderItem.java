@@ -59,6 +59,9 @@ public class OrderItem {
         this.isOrdered = false;
     }
 
+    public boolean getIsOrdered() {
+        return this.isOrdered;
+    }
 
     
 }

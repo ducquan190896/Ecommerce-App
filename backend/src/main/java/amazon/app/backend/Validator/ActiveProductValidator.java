@@ -12,12 +12,12 @@ public class ActiveProductValidator implements ConstraintValidator<isActiveProdu
     }
     @Override
     public boolean isValid(Product product, ConstraintValidatorContext context) {
-        if(product.getActive() == true && product.getUnitsInStock() <= 0) {
+        if(product.getActive() == true && product.getPriceDiscounted() == 0) {
             return false;
         }
-        if(product.getActive() == false && product.getUnitsInStock() > 0) {
-            return false;
-        }
+       
+        
+        
         return true;
     }
 }

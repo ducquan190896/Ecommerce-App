@@ -109,14 +109,15 @@ public class Product {
         this.price = price;
         this.imageUrl = imageUrl;
         this.unitsInStock = unitsInStock;
-        this.active = true;
+        this.active = false;
         this.rating = null;
         this.brand = brand;
         this.productCode = productCode;
         this.category = category;
         this.priceDiscounted = 0;
     }
-    public Product(String name, String description, double price, int unitsInStock, Brand brand, String productCode, Category category, boolean active) {
+
+    public Product(String name, String description, double price, int unitsInStock, Brand brand, String productCode, Category category, boolean active, double priceDiscounted) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -128,13 +129,14 @@ public class Product {
         this.category = category;
         this.priceDiscounted = 0;
         this.imageUrl = null;
+        this.priceDiscounted = priceDiscounted;
     }
     public Product(String name, String description, double price, int unitsInStock, Brand brand, String productCode, Category category) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.unitsInStock = unitsInStock;
-        this.active = true;
+        this.active = false;
         this.rating = null;
         this.imageUrl = null;
         this.brand = brand;

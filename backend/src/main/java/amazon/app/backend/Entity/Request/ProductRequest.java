@@ -17,6 +17,7 @@ public class ProductRequest {
     private int unitsInStock;
     private String brandName;
     private String categoryName;
+   
     
     public ProductRequest( String name, String description, double price, int unitsInStock, String brandName, String categoryName) {
        
@@ -26,6 +27,7 @@ public class ProductRequest {
         this.unitsInStock = unitsInStock;
         this.brandName = brandName;
         this.categoryName = categoryName;
+     
     }
 
 }

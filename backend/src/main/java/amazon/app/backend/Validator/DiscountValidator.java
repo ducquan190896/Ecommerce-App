@@ -13,9 +13,9 @@ public class DiscountValidator implements ConstraintValidator<IsDiscount, Produc
 
     @Override
     public boolean isValid(Product product, ConstraintValidatorContext context) {
-        if(product == null) {
-            return true;
-        }
-        return product.getPrice() >= product.getPriceDiscounted();
+        // if(product == null) {
+        //     return true;
+        // }
+        return product.getPrice() >= product.getPriceDiscounted() ? true: false;
     }
 }

@@ -14,6 +14,7 @@ import amazon.app.backend.Entity.Category;
 import amazon.app.backend.Entity.Product;
 import amazon.app.backend.Entity.Request.ProductRequest;
 import amazon.app.backend.Entity.Response.ProductResponse;
+import amazon.app.backend.Exception.BadResultException;
 import amazon.app.backend.Exception.EntityExistingException;
 import amazon.app.backend.Exception.EntityNotFoundException;
 import amazon.app.backend.Repository.BrandRepos;
@@ -130,10 +131,11 @@ public class ProductServiceIml implements ProductService{
         }
         Category category = entityCategory.get();
 
-        Product product = new Product(productRequest.getName(), productRequest.getDescription(), productRequest.getPrice(), productRequest.getUnitsInStock(), brand, productCode, category, false);
+        Product product = new Product(productRequest.getName(), productRequest.getDescription(), productRequest.getPrice(), productRequest.getUnitsInStock(), brand, productCode, category);
         if(productRequest.getImageUrl() != null ) {
             product.setImageUrl(productRequest.getImageUrl());
         }
+        productRepos.save(product);
         ProductResponse response = checkImage(product);
         return response;
     }
@@ -166,9 +168,13 @@ public class ProductServiceIml implements ProductService{
                     product.setName(name);
                 }
                 if(priceDiscounted != null) {
+                    if(priceDiscounted > product.getPrice()) {
+                        throw new BadResultException("the discount price must be less than the price of product");
+                    }
                     product.setPriceDiscounted(priceDiscounted);
+                    product.setActive(true);
                 }
-
+                productRepos.save(product);
                ProductResponse response = checkImage(product);
                return response;
     }
@@ -177,10 +183,10 @@ public class ProductServiceIml implements ProductService{
         List<ProductResponse> responsese = products.stream().map(p -> {
             ProductResponse response = null;
             if(p.getImageUrl() != null) {
-                response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getImageUrl(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName());
+                response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getImageUrl(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName(), p.getActive(), p.getPriceDiscounted());
                 
             } else {
-                response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName());
+                response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName(), p.getActive(),  p.getPriceDiscounted());
             }
             return response;
            
@@ -197,8 +203,8 @@ public class ProductServiceIml implements ProductService{
 
     private ProductResponse checkImage(Product product) {
         if(product.getImageUrl() != null) {
-            return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImageUrl(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName());
+            return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImageUrl(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted());
         }
-        return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName());
+        return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted());
     }
 }

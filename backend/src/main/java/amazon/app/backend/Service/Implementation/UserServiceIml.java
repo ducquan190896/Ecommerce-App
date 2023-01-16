@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import amazon.app.backend.Entity.Cart;
 import amazon.app.backend.Entity.Role;
 import amazon.app.backend.Entity.Users;
 import amazon.app.backend.Entity.Request.ChangePassword;
@@ -23,6 +24,7 @@ import amazon.app.backend.Entity.Response.UserResponse;
 import amazon.app.backend.Exception.BadResultException;
 import amazon.app.backend.Exception.EntityExistingException;
 import amazon.app.backend.Exception.EntityNotFoundException;
+import amazon.app.backend.Repository.CartRepos;
 import amazon.app.backend.Repository.UserRepos;
 import amazon.app.backend.Service.UserService;
 
@@ -30,6 +32,8 @@ import amazon.app.backend.Service.UserService;
 public class UserServiceIml implements UserService, UserDetailsService {
     @Autowired
     UserRepos userRepos;
+    @Autowired
+    CartRepos cartRepos;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -54,7 +58,10 @@ public class UserServiceIml implements UserService, UserDetailsService {
             throw new EntityExistingException("the user with email " + userSignup.getEmail() + " is exist");
         }
        Users user = new Users(userSignup.getEmail(), userSignup.getUsername(), new BCryptPasswordEncoder().encode(userSignup.getPassword()), Role.USER);
+       Cart cart = new Cart(user);
+        user.setCart(cart);
        userRepos.save(user);
+      
        UserResponse userResponse = new UserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getRole().name());
        return userResponse;
 
