@@ -1,6 +1,8 @@
 package amazon.app.backend.Entity.Request;
 
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,7 @@ public class productUpdateRequest {
     private String name;
     private String description;
     private Double price;
-    private String imageUrl;
+    private List<String> imageUrls;
     private Integer unitsInStock;
     private Boolean active;
 

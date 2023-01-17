@@ -132,8 +132,8 @@ public class ProductServiceIml implements ProductService{
         Category category = entityCategory.get();
 
         Product product = new Product(productRequest.getName(), productRequest.getDescription(), productRequest.getPrice(), productRequest.getUnitsInStock(), brand, productCode, category);
-        if(productRequest.getImageUrl() != null ) {
-            product.setImageUrl(productRequest.getImageUrl());
+        if(productRequest.getImageUrls().size() > 0) {
+            product.setImageUrls(productRequest.getImageUrls());
         }
         productRepos.save(product);
         ProductResponse response = checkImage(product);
@@ -141,7 +141,7 @@ public class ProductServiceIml implements ProductService{
     }
 
     @Override
-    public ProductResponse updateProduct(Long id, Integer unitsInStock, Boolean active, String imageUrl, Double price, String description, String name, Double priceDiscounted) {
+    public ProductResponse updateProduct(Long id, Integer unitsInStock, Boolean active, List<String> imageUrls, Double price, String description, String name, Double priceDiscounted) {
              Optional<Product> entity = productRepos.findById(id);
                 Product product = isCheck(entity);
                 if(unitsInStock != null) {
@@ -150,8 +150,8 @@ public class ProductServiceIml implements ProductService{
                 if(active != null) {
                     product.setActive(active);
                 }
-                if(imageUrl != null) {
-                    product.setImageUrl(imageUrl);
+                if(imageUrls.size() > 0) {
+                    product.setImageUrls(imageUrls);
                 }
                 if(price != null) {
                     product.setPrice(price);
@@ -182,8 +182,8 @@ public class ProductServiceIml implements ProductService{
     private List<ProductResponse> convertToProductResponse(List<Product> products) {
         List<ProductResponse> responsese = products.stream().map(p -> {
             ProductResponse response = null;
-            if(p.getImageUrl() != null) {
-                response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getImageUrl(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName(), p.getActive(), p.getPriceDiscounted());
+            if(p.getImageUrls().size() > 0) {
+                response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getImageUrls(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName(), p.getActive(), p.getPriceDiscounted());
                 
             } else {
                 response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName(), p.getActive(),  p.getPriceDiscounted());
@@ -202,8 +202,8 @@ public class ProductServiceIml implements ProductService{
     }
 
     private ProductResponse checkImage(Product product) {
-        if(product.getImageUrl() != null) {
-            return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImageUrl(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted());
+        if(product.getImageUrls().size() > 0) {
+            return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImageUrls(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted());
         }
         return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted());
     }

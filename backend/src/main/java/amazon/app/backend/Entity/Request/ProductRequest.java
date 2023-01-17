@@ -1,4 +1,6 @@
 package amazon.app.backend.Entity.Request;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +15,7 @@ public class ProductRequest {
     private String name;
     private String description;
     private double price;
-    private String imageUrl;
+    private List<String> imageUrls;
     private int unitsInStock;
     private String brandName;
     private String categoryName;

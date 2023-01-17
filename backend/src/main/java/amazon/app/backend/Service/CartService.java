@@ -6,5 +6,5 @@ public interface CartService {
     CartResponse addToCart(Long productId, int quantity);
     CartResponse minusFromCart(Long productId, int quantity);
     CartResponse clearCart();
-    
+    CartResponse getCartByAuthUser();
 }

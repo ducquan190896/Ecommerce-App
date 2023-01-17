@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+//this class is used for the order item in the shopping cart
 public class OrderItemResponse {
     private Long id;
     private Product product;

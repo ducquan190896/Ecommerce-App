@@ -1,9 +1,12 @@
 package amazon.app.backend.Service.Implementation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +17,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 
 import amazon.app.backend.Entity.Cart;
 import amazon.app.backend.Entity.Role;
@@ -26,6 +32,7 @@ import amazon.app.backend.Exception.EntityExistingException;
 import amazon.app.backend.Exception.EntityNotFoundException;
 import amazon.app.backend.Repository.CartRepos;
 import amazon.app.backend.Repository.UserRepos;
+import amazon.app.backend.Security.SecurityConstant;
 import amazon.app.backend.Service.UserService;
 
 @Service
@@ -34,6 +41,8 @@ public class UserServiceIml implements UserService, UserDetailsService {
     UserRepos userRepos;
     @Autowired
     CartRepos cartRepos;
+    @Autowired
+    HttpServletResponse response;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -61,6 +70,16 @@ public class UserServiceIml implements UserService, UserDetailsService {
        Cart cart = new Cart(user);
         user.setCart(cart);
        userRepos.save(user);
+
+       List<String> claims = new ArrayList<>();
+       claims.add( user.getRole().getName());
+       String token = JWT.create()
+                        .withSubject(user.getUsername())
+                        .withClaim("authorities", claims)
+                        .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstant.expire_time))
+                        .sign(Algorithm.HMAC512(SecurityConstant.private_key));
+
+         response.setHeader("Authorization", SecurityConstant.authorization + token);               
       
        UserResponse userResponse = new UserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getRole().name());
        return userResponse;

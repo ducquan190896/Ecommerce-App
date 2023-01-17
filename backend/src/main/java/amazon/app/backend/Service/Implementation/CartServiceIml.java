@@ -135,6 +135,27 @@ public class CartServiceIml implements CartService {
         return cartResponse;
     }
 
+    
+
+
+    @Override
+    public CartResponse getCartByAuthUser() {
+        Users user = getAuthUser();
+        Cart cart = user.getCart();
+
+        Set<OrderItem>  items = cart.getOrderItems();
+        Set<OrderItemResponse> responseItems = new HashSet<>();
+        if(items.size() > 0) {
+            responseItems = items.stream().map(ite -> convertToResponse(ite)).collect(Collectors.toSet());
+        }
+      
+
+        CartResponse cartResponse = new CartResponse(cart.getId(), user.getId(), cart.getTotalPrice(), cart.getTotalQuantity(), responseItems, cart.getDateUpdated());
+        return cartResponse;
+    }
+
+
+
     private Users getAuthUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<Users> entity = userRepos.findByUsername(username);
@@ -151,4 +172,5 @@ public class CartServiceIml implements CartService {
         }
         return new OrderItemResponse(orderItem.getId(), orderItem.getProduct(), orderItem.getQuantity(), orderItem.getIsOrdered());
     }
+   
 }

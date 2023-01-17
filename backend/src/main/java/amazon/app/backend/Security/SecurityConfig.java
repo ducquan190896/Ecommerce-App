@@ -53,6 +53,7 @@ public class SecurityConfig {
         .antMatchers(HttpMethod.GET, "/api/cities/**").permitAll()
         .antMatchers(HttpMethod.GET, "/api/countries/**").permitAll()
         .antMatchers(HttpMethod.GET, "/api/reviews/**").permitAll()
+        .antMatchers("/api/images/**").permitAll()
         .antMatchers( "/api/brands/**").hasRole(Role.ADMIN.name())
         .antMatchers( "/api/categories/**").hasRole(Role.ADMIN.name())      
         .antMatchers("/api/products/**").hasRole(Role.ADMIN.name())

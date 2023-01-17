@@ -15,6 +15,6 @@ public interface ProductService {
     ProductResponse getProductByCode(String productCode);
     ProductResponse getProductById(Long id);
     ProductResponse saveProduct(ProductRequest productRequest);
-    ProductResponse updateProduct(Long id, Integer unitsInStock, Boolean active, String imageUrl, Double price, String description, String name, Double priceDiscounted);
+    ProductResponse updateProduct(Long id, Integer unitsInStock, Boolean active, List<String> imageUrls, Double price, String description, String name, Double priceDiscounted);
     void deleteProduct(Long id);
 }

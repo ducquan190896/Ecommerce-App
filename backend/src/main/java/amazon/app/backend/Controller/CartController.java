@@ -30,4 +30,9 @@ public class CartController {
     public ResponseEntity<CartResponse> clearClart() {
         return new ResponseEntity<CartResponse>(cartService.clearCart(), HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/getCartOfAuthUser")
+    public ResponseEntity<CartResponse> getCartOfAuthUser() {
+        return new ResponseEntity<CartResponse>(cartService.getCartByAuthUser(), HttpStatus.OK);
+    }
 }

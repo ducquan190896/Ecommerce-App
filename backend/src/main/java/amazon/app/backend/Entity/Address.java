@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.*;
 
@@ -55,7 +56,7 @@ public class Address {
     @Column(name = "is_shipping")
     private boolean isShipping;
 
-    
+    @JsonIgnore
     @OneToOne
     @PrimaryKeyJoinColumn
     private Orders order;
@@ -91,6 +92,15 @@ public class Address {
         this.isBilling = isBilling;
         this.isShipping = isShipping;
         this.order = order;
+    }
+    public Address(String street, String city, String country, String zipCode, boolean isBilling, boolean isShipping) {
+        this.street = street;
+        this.city = city;
+        this.country = country;
+        this.zipCode = zipCode;
+        this.isBilling = isBilling;
+        this.isShipping = isShipping;
+        
     }
     @Override
     public String toString() {

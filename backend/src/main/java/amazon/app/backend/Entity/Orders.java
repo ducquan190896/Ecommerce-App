@@ -92,6 +92,15 @@ public class Orders {
         this.billingAddress = billingAddress;
         this.shippingAddress = shippingAddress;
     }
+    public Orders(Users user,  String trackingNumber,  double totalPrice, int totalQuantity, Address billingAddress, Address shippingAddress) {
+        this.user = user;
+        this.trackingNumber = trackingNumber;
+        this.status = StatusOrder.OPEN;
+        this.totalPrice = totalPrice;
+        this.totalQuantity = totalQuantity;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
+    }
     
 
     public Orders(Users user,  String trackingNumber, double totalPrice, int totalQuantity) {

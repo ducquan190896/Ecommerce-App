@@ -1,6 +1,8 @@
 package amazon.app.backend.Entity;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -65,8 +67,14 @@ public class Product {
     @Column(name = "price_discounted")
     private double priceDiscounted;
   
+    
+    @ElementCollection(targetClass = String.class)
+    @CollectionTable(
+        name = "image",
+        joinColumns = @JoinColumn(name = "student_id")
+    )
     @Column(name = "image_url")
-    private String imageUrl;
+    private List<String> imageUrls = new ArrayList<>();
 
     @Column(name = "active")
     private boolean active;
@@ -103,11 +111,11 @@ public class Product {
     
  
 
-    public Product(String name, String description, double price, String imageUrl, int unitsInStock, Brand brand, String productCode, Category category) {
+    public Product(String name, String description, double price, List<String> imageUrls, int unitsInStock, Brand brand, String productCode, Category category) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imageUrls = imageUrls;
         this.unitsInStock = unitsInStock;
         this.active = false;
         this.rating = null;
@@ -128,7 +136,7 @@ public class Product {
         this.productCode = productCode;
         this.category = category;
         this.priceDiscounted = 0;
-        this.imageUrl = null;
+        this.imageUrls = null;
         this.priceDiscounted = priceDiscounted;
     }
     public Product(String name, String description, double price, int unitsInStock, Brand brand, String productCode, Category category) {
@@ -138,7 +146,7 @@ public class Product {
         this.unitsInStock = unitsInStock;
         this.active = false;
         this.rating = null;
-        this.imageUrl = null;
+        this.imageUrls = null;
         this.brand = brand;
         this.productCode = productCode;
         this.category = category;
@@ -147,7 +155,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", brand=" + brand + ", productCode=" + productCode
-                + ", description=" + description + ", price=" + price + ", imageUrl=" + imageUrl + ", active=" + active
+                + ", description=" + description + ", price=" + price + ", imageUrls=" + imageUrls + ", active=" + active
                 + ", unitsInStock=" + unitsInStock + ", rating=" + rating + ", dateCreated=" + dateCreated
                 + ", dateUpdated=" + dateUpdated + "]";
     }
