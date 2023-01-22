@@ -150,7 +150,7 @@ public class ProductServiceIml implements ProductService{
                 if(active != null) {
                     product.setActive(active);
                 }
-                if(imageUrls.size() > 0) {
+                if(imageUrls != null && imageUrls.size() > 0) {
                     product.setImageUrls(imageUrls);
                 }
                 if(price != null) {
@@ -183,10 +183,10 @@ public class ProductServiceIml implements ProductService{
         List<ProductResponse> responsese = products.stream().map(p -> {
             ProductResponse response = null;
             if(p.getImageUrls().size() > 0) {
-                response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getImageUrls(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName(), p.getActive(), p.getPriceDiscounted());
+                response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getImageUrls(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName(), p.getActive(), p.getPriceDiscounted(), p.getRating());
                 
             } else {
-                response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName(), p.getActive(),  p.getPriceDiscounted());
+                response = new ProductResponse(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getUnitsInStock(), p.getBrand().getName(), p.getProductCode(), p.getCategory().getName(), p.getActive(),  p.getPriceDiscounted(),  p.getRating());
             }
             return response;
            
@@ -203,8 +203,8 @@ public class ProductServiceIml implements ProductService{
 
     private ProductResponse checkImage(Product product) {
         if(product.getImageUrls().size() > 0) {
-            return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImageUrls(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted());
+            return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImageUrls(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted(), product.getRating());
         }
-        return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted());
+        return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted(), product.getRating());
     }
 }

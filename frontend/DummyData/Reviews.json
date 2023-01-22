@@ -1,0 +1,110 @@
+[
+    {
+        "id": 12,
+        "description": "it is convenient",
+        "rating": 5,
+        "productId": 1,
+        "username": "quan2",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 11,
+        "description": "it is convenient",
+        "rating": 5,
+        "productId": 9,
+        "username": "quan2",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 10,
+        "description": "it is beautiful",
+        "rating": 3,
+        "productId": 10,
+        "username": "quan2",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 9,
+        "description": "it is ugly",
+        "rating": 1,
+        "productId": 8,
+        "username": "quan2",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 8,
+        "description": "it is good",
+        "rating": 4,
+        "productId": 8,
+        "username": "quan",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 7,
+        "description": "it is good",
+        "rating": 5,
+        "productId": 7,
+        "username": "quan",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 6,
+        "description": "it is good",
+        "rating": 3,
+        "productId": 6,
+        "username": "quan",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 5,
+        "description": "it is acceptable",
+        "rating": 2,
+        "productId": 5,
+        "username": "quan",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 4,
+        "description": "it is useless",
+        "rating": 1,
+        "productId": 4,
+        "username": "quan",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 3,
+        "description": "it is normal",
+        "rating": 4,
+        "productId": 3,
+        "username": "quan",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 2,
+        "description": "it is helpful",
+        "rating": 2,
+        "productId": 2,
+        "username": "quan",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    },
+    {
+        "id": 1,
+        "description": "it is good",
+        "rating": 3,
+        "productId": 1,
+        "username": "quan",
+        "dateCreated": "2023-01-21 05:52",
+        "dateUpdated": "2023-01-21 05:52"
+    }
+]

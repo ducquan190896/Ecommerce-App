@@ -23,10 +23,11 @@ public class ProductResponse {
     private String categoryName;
     private boolean active;
     private double priceDiscounted;
+    private Integer rating;
    
     
     public ProductResponse(Long id, String name, String description, double price, int unitsInStock, String brandName,
-            String productCode, String categoryName, boolean active, double priceDiscounted) {
+            String productCode, String categoryName, boolean active, double priceDiscounted, Integer rating) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -37,6 +38,7 @@ public class ProductResponse {
         this.categoryName = categoryName;
         this.active = active;
         this.priceDiscounted = priceDiscounted;
+        this.rating = rating;
     }
 
     

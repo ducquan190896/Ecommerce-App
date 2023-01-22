@@ -62,7 +62,7 @@ public class ProductController {
         return new ResponseEntity<HttpStatus>( HttpStatus.OK);
     }
     @PutMapping("/Id/{Id}")
-    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long Id, @RequestParam(required = false) Integer unitsInStock, @RequestParam(required = false) Boolean active, @RequestParam(required = false) String imageUrl, @RequestParam(required = false) Double price, @RequestParam(required = false) String description, @RequestParam(required = false) String name, @RequestParam(required = false) Double priceDiscounted) {
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long Id, @RequestParam(required = false) Integer unitsInStock, @RequestParam(required = false) Boolean active, @RequestParam(required = false) List<String> imageUrl, @RequestParam(required = false) Double price, @RequestParam(required = false) String description, @RequestParam(required = false) String name, @RequestParam(required = false) Double priceDiscounted) {
         return new ResponseEntity<ProductResponse>(productService.updateProduct(Id, unitsInStock, active, imageUrl, price, description, name, priceDiscounted), HttpStatus.OK);
     }
 
