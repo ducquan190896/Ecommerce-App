@@ -12,8 +12,10 @@ import DummyProducts from "../DummyData/Products.json"
 import { useNavigation } from '@react-navigation/native'
 import HeaderHomeComponent from '../Components/HeaderHomeComponent'
 import HomePickerComponent from '../Components/HomePickerComponent'
-import Categories from "../DummyData/Categories.json"
-import Brands from "../DummyData/Brands.json"
+import { getBrands } from '../Reducers/Actions/BrandAction'
+import { getCategories } from '../Reducers/Actions/CategoryAction'
+//import Categories from "../DummyData/Categories.json"
+//import Brands from "../DummyData/Brands.json"
 const Home = () => {
   
   const [isLoading, setIsLoading] = useState(false)
@@ -27,13 +29,29 @@ const Home = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const {products, product, productSuccess, productError, message: productMessage, updateStatus: updateProductStatus, brandStatus, nameStatus, categoryStatus } = useSelector(state => state.PRODUCTS)
-
+  const {categories, category, categorySuccess, categoryError, message: categoryMessage} = useSelector(state => state.CATEGORIES)
+  const {brands, brand, brandSuccess, brandError, message: brandMessage} = useSelector(state => state.BRANDS)
+  
   const loadProducts = useCallback(async () => {
    await dispatch(getProducts())
    if(products && products.length > 0) {
     console.log(products)
    }
   }, [dispatch, getProducts])
+
+  const loadBrands = useCallback(async () => {
+    await dispatch(getBrands())
+    if(brands && brands.length > 0) {
+      console.log(brands)
+    }
+  }, [dispatch, brands])
+  
+  const loadCategories = useCallback(async () => {
+    await dispatch(getCategories())
+    if(categories && categories.length > 0) {
+      console.log(categories)
+    }
+  }, [dispatch, categories])
   
   const loadProductsByCategory = async (categoryName) => {
     await dispatch(getProductsByCategory(categoryName))
@@ -61,9 +79,6 @@ const Home = () => {
      }
   }
 
-  const testProducts = DummyProducts;
-  const categories = Categories
-  const brands = Brands
 
   // useLayoutEffect(() => {
   //   navigation.setOptions({
@@ -73,9 +88,14 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    loadProducts().then(() => setIsLoading(false))
- 
- 
+    loadCategories().then(() => loadCategories()).then(() => loadBrands()).then(() => loadProducts()).then(() => setIsLoading(false)).catch(err => setIsError(true)) 
+    if(brands && brands.length > 0) {
+      console.log(brands)
+    }
+    if(categories && categories.length > 0) {
+      console.log(categories)
+    }
+
   }, [dispatch])
 
 
@@ -103,8 +123,8 @@ const Home = () => {
     <HeaderHomeComponent showHome={showHome} setShowHome={setShowHome} loadProducts={loadProducts} loadProductsByName={loadProductsByName} value={searchValue} setValue={setSearchValue}></HeaderHomeComponent>
     
     <View style={tw('flex-row mx-auto')}>
-      <HomePickerComponent setShowHome={setShowHome}  loadProduct={loadProductsByCategory}  data={categories}></HomePickerComponent>
-      <HomePickerComponent data={brands} setShowHome={setShowHome}  loadProduct={loadProductsByBrand}  ></HomePickerComponent>
+      {categories && categories.length > 0 && <HomePickerComponent setShowHome={setShowHome}  loadProduct={loadProductsByCategory}  data={categories}></HomePickerComponent>}
+      {brands && brands.length > 0 && <HomePickerComponent data={brands} setShowHome={setShowHome}  loadProduct={loadProductsByBrand}  ></HomePickerComponent>}
     </View>
     <ScrollView showsVerticalScrollIndicator={false} style={tw('flex-1')}>
     {products && products.length > 0 && products.map(pro =>  <HomeProductDetail item={pro} key={pro.id}></HomeProductDetail>)}

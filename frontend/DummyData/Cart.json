@@ -1,0 +1,65 @@
+{
+    "id": 1,
+    "userId": 1,
+    "totalPrice": 1000.0,
+    "totalQuantity": 5,
+    "orderItemReponses": [
+        {
+            "id": 2,
+            "product": {
+                "id": 8,
+                "name": "sweet pant",
+                "productCode": "000118",
+                "description": "football glove for goalkeeper",
+                "price": 200.0,
+                "priceDiscounted": 0.0,
+                "imageUrls": [],
+                "active": false,
+                "unitsInStock": 100,
+                "rating": null,
+                "dateCreated": "2023-01-22T13:42:50.154655",
+                "dateUpdated": "2023-01-22 13:42",
+                "category": {
+                    "id": 5,
+                    "name": "pant"
+                },
+                "brand": {
+                    "id": 2,
+                    "name": "addidas"
+                }
+            },
+            "quantity": 3,
+            "orderId": null,
+            "ordered": false
+        },
+        {
+            "id": 1,
+            "product": {
+                "id": 6,
+                "name": "goalkeeper gloves Neuer",
+                "productCode": "000116",
+                "description": "football glove for goalkeeper",
+                "price": 200.0,
+                "priceDiscounted": 150,
+                "imageUrls": [],
+                "active": true,
+                "unitsInStock": 10,
+                "rating": null,
+                "dateCreated": "2023-01-22T13:42:50.136492",
+                "dateUpdated": "2023-01-22 13:42",
+                "category": {
+                    "id": 4,
+                    "name": "glove"
+                },
+                "brand": {
+                    "id": 3,
+                    "name": "new balance"
+                }
+            },
+            "quantity": 2,
+            "orderId": null,
+            "ordered": false
+        }
+    ],
+    "dateUpdated": "2023-01-22 01:42"
+}

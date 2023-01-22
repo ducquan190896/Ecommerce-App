@@ -120,19 +120,25 @@ public class ProductServiceIml implements ProductService{
         String productCode = UUID.randomUUID().toString();
 
         Optional<Brand> entityBrand = brandRepos.findByName(productRequest.getBrandName());
+        Brand brand = null;
         if(!entityBrand.isPresent()) {
-            throw new EntityNotFoundException("the category not found");
+           brand = new Brand(productRequest.getBrandName());
+           brandRepos.save(brand);
+        } else {
+            brand= entityBrand.get();
         }
-        Brand brand= entityBrand.get();
+        
 
          Optional<Category> entityCategory = categoryRepos.findByName(productRequest.getCategoryName());
+         Category category = null;
         if(!entityCategory.isPresent()) {
-            throw new EntityNotFoundException("the category not found");
+            category = new Category(productRequest.getCategoryName());
+            categoryRepos.save(category);
         }
-        Category category = entityCategory.get();
+         category = entityCategory.get();
 
         Product product = new Product(productRequest.getName(), productRequest.getDescription(), productRequest.getPrice(), productRequest.getUnitsInStock(), brand, productCode, category);
-        if(productRequest.getImageUrls().size() > 0) {
+        if(productRequest.getImageUrls() != null && productRequest.getImageUrls().size() > 0) {
             product.setImageUrls(productRequest.getImageUrls());
         }
         productRepos.save(product);
@@ -202,7 +208,7 @@ public class ProductServiceIml implements ProductService{
     }
 
     private ProductResponse checkImage(Product product) {
-        if(product.getImageUrls().size() > 0) {
+        if(product.getImageUrls() != null && product.getImageUrls().size() > 0) {
             return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImageUrls(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted(), product.getRating());
         }
         return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getUnitsInStock(), product.getBrand().getName(), product.getProductCode(), product.getCategory().getName(), product.getActive(),  product.getPriceDiscounted(), product.getRating());

@@ -7,10 +7,10 @@ import BrandReducer from "./Reducers/BrandReducer";
 import CategoryReducer from "./Reducers/CategoryReducer";
 import CityReducer from "./Reducers/CityReducer";
 import CountryReducer from "./Reducers/CountryReducer";
+import UserReducer from "./Reducers/UserReducer";
+import CartReducer from "./Reducers/CartReducer";
 
-const initialState = {
-
-}
+const initialState = {}
 
 const rootReducer = combineReducers({
 PRODUCTS: ProductReducer,
@@ -18,7 +18,9 @@ REVIEWS: ReviewReducer,
 BRANDS: BrandReducer,
 CATEGORIES: CategoryReducer,
 CITIES: CityReducer,
-COUNTRIES: CountryReducer
+COUNTRIES: CountryReducer,
+USERS: UserReducer,
+CARTS: CartReducer
 })
 const middleWare = [thunk]
 const Store = createStore( 

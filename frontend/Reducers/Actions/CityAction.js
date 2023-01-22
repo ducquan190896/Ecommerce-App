@@ -1,6 +1,6 @@
 export const getCities = () => async (dispatch, getState) => {
     try {
-        const res = await fetch("http://localhost:8080/api/cities/all")
+        const res = await fetch("http://10.0.2.2:8080/api/cities/all")
         const data = await res.json()
         console.log(data)
         dispatch({
