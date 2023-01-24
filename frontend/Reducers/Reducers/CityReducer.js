@@ -14,6 +14,12 @@ export default (state = initalState, action) => {
                 cities: action.payload,
                 citySuccess: true
             }
+        case "get_cities_by_country":
+            return {
+                ...state,
+                cities: action.payload,
+                citySuccess: true
+            }
         case "error_city":
             return {
                 ...state,

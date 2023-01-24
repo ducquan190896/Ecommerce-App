@@ -1,3 +1,19 @@
+.absolute {
+  position: absolute
+}
+
+.relative {
+  position: relative
+}
+
+.top-6 {
+  top: 1.5rem
+}
+
+.left-2 {
+  left: 0.5rem
+}
+
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem
@@ -34,12 +50,16 @@
   margin-right: 0.5rem
 }
 
-.mt-2 {
-  margin-top: 0.5rem
+.mt-6 {
+  margin-top: 1.5rem
 }
 
 .mb-4 {
   margin-bottom: 1rem
+}
+
+.mt-2 {
+  margin-top: 0.5rem
 }
 
 .ml-2 {
@@ -48,10 +68,6 @@
 
 .mt-4 {
   margin-top: 1rem
-}
-
-.mt-6 {
-  margin-top: 1.5rem
 }
 
 .flex {
@@ -224,6 +240,11 @@
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem
 }
 
 .pl-4 {

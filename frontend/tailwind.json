@@ -1,4 +1,24 @@
 {
+	"absolute": {
+		"style": {
+			"position": "absolute"
+		}
+	},
+	"relative": {
+		"style": {
+			"position": "relative"
+		}
+	},
+	"top-6": {
+		"style": {
+			"top": 24
+		}
+	},
+	"left-2": {
+		"style": {
+			"left": 8
+		}
+	},
 	"my-2": {
 		"style": {
 			"marginTop": 8,
@@ -43,14 +63,19 @@
 			"marginRight": 8
 		}
 	},
-	"mt-2": {
+	"mt-6": {
 		"style": {
-			"marginTop": 8
+			"marginTop": 24
 		}
 	},
 	"mb-4": {
 		"style": {
 			"marginBottom": 16
+		}
+	},
+	"mt-2": {
+		"style": {
+			"marginTop": 8
 		}
 	},
 	"ml-2": {
@@ -61,11 +86,6 @@
 	"mt-4": {
 		"style": {
 			"marginTop": 16
-		}
-	},
-	"mt-6": {
-		"style": {
-			"marginTop": 24
 		}
 	},
 	"flex": {
@@ -306,6 +326,12 @@
 		"style": {
 			"paddingLeft": 32,
 			"paddingRight": 32
+		}
+	},
+	"py-6": {
+		"style": {
+			"paddingTop": 24,
+			"paddingBottom": 24
 		}
 	},
 	"pl-4": {

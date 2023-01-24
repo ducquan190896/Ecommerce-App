@@ -41,6 +41,13 @@ public class AddressServiceIml implements AddressService {
 
    
 
+    @Override
+    public Address getAddressById(Long id) {
+        Address address = ischeck(id);
+        return address;
+
+    }
+
     private Address ischeck(Long id) {
         Optional<Address> entity = addressRepos.findById(id);
         if(!entity.isPresent()) {

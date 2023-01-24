@@ -9,6 +9,7 @@ import CityReducer from "./Reducers/CityReducer";
 import CountryReducer from "./Reducers/CountryReducer";
 import UserReducer from "./Reducers/UserReducer";
 import CartReducer from "./Reducers/CartReducer";
+import AddressReducer from "./Reducers/AddressReducer";
 
 const initialState = {}
 
@@ -20,7 +21,8 @@ CATEGORIES: CategoryReducer,
 CITIES: CityReducer,
 COUNTRIES: CountryReducer,
 USERS: UserReducer,
-CARTS: CartReducer
+CARTS: CartReducer,
+ADDRESSES: AddressReducer
 })
 const middleWare = [thunk]
 const Store = createStore( 

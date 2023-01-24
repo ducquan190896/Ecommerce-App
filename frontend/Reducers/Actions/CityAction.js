@@ -14,6 +14,23 @@ export const getCities = () => async (dispatch, getState) => {
         })
     }
 }
+export const getCitiesByCountry = (country) => async (dispatch, getState) => {
+    try {
+        const res = await fetch(`http://10.0.2.2:8080/api/cities/countryName/${country}`)
+        
+        const data = await res.json()
+        //console.log(data)
+        dispatch({
+            type: "get_cities_by_country",
+            payload: data
+        })
+    } catch (err) {
+        dispatch({
+            type: "error_city",
+            payload: err
+        })
+    }
+}
 
 export const resetCity = () => (dispatch, getState) => {
     dispatch({
