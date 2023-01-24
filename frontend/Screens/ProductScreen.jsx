@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import HeaderHomeComponent from '../Components/HeaderHomeComponent'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts, getProductsByName } from '../Reducers/Actions/ProductActions'
+import { getProductById, getProducts, getProductsByName } from '../Reducers/Actions/ProductActions'
 import DummyProducts from "../DummyData/Products.json"
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons'; 
@@ -11,10 +11,11 @@ import { useTailwind } from 'tailwind-rn/dist'
 import ImageSwipeDot from '../Components/ImageSwipeDot'
 import { Button } from '@rneui/base'
 import RatingComponent from '../Components/RatingComponent'
-import { getReviewByProduct } from '../Reducers/Actions/ReviewAction'
+import { addReview, getReviewByProduct } from '../Reducers/Actions/ReviewAction'
 import LoadingComponent from '../Components/LoadingComponent'
 import ReviewComponent from '../Components/ReviewComponent'
 import { Picker } from '@react-native-picker/picker'
+import ErrorComponent from '../Components/ErrorComponent'
 
 
 
@@ -34,7 +35,7 @@ const ProductScreen = () => {
     const tw = useTailwind()
     const dispatch = useDispatch()
     const {reviews, review, reviewSuccess, reviewError} = useSelector(state => state.REVIEWS)
-    const {products, productSuccess, productError, message: productMessage, updateStatus: updateProductStatus, brandStatus, nameStatus, categoryStatus } = useSelector(state => state.PRODUCTS)
+    const {products, product, productSuccess, productError, message: productMessage, updateStatus: updateProductStatus, brandStatus, nameStatus, categoryStatus } = useSelector(state => state.PRODUCTS)
     const images = [
        require( "../images/shoes-wasatch-running-3.png"),
         require("../images/4-40004_transparent-nike-shoe-png-png-download.png"),
@@ -42,20 +43,34 @@ const ProductScreen = () => {
     ]
 
     // replace route params right here
+    // const params = useRoute()
+    // const {productId} = params
+    const productId = 5;
     const testProducts = DummyProducts;
-    const product = testProducts[0]
+    // const product = testProducts[0]
+
+    const loadProductById = useCallback(async () => {
+        await dispatch(getProductById(productId))
+    }, [productId, product,  dispatch])
 
     const loadReviews = useCallback(async () => {
-     
         await dispatch(getReviewByProduct(product.id))
-    }, [product, dispatch, reviews])
+    }, [productId ,product, dispatch, reviews])
 
     useEffect(() => {
-        console.log(product)
+        
         setIsLoading(true)
-        loadReviews().then(() => setIsLoading(false)).catch(() => setIsError(true))
-      
-    }, [dispatch, product])
+        loadProductById().then(() => loadReviews()).then(() => setIsLoading(false)).catch(() => setIsError(true))
+        
+    }, [dispatch,  productId])
+
+    useEffect(() => {
+        if(productError ||reviewError) {
+            setTimeout(() => {
+                setIsError(false)
+            }, 3000);
+        }
+    }, [productError, reviewError])
   
     const loadProducts = async () => {
         await dispatch(getProducts())
@@ -86,20 +101,24 @@ const ProductScreen = () => {
     const showReviewForm = () => {
         setAddingReview(prev => !prev)
     }
-    const addReviewToServer = () => {
+    const addReviewToServer = async () => {
    // need auth user token      
-        if(!reviewDescription) {
-            Alert.alert("please type your description")
-        } else {
+         if(reviewDescription) {
             const obj ={
                 rating: reviewRating,
                 description: reviewDescription,
-                productId: product.id
+                productId: productId
             }
-            console.log(obj)
+            setIsLoading(true)
+            await dispatch(addReview(obj))
+            await loadReviews()
+            setIsLoading(false)
+    
             setReviewDescription(null)
             setReviewRating(5)
             setAddingReview(false)
+        } else {
+            Alert.alert("please type your description")
         }
        
     }
@@ -200,7 +219,7 @@ const ProductScreen = () => {
                     </View>
                     </TouchableWithoutFeedback>
                 )}
-                {reviews && reviews.length >  0 && reviews.map(rev => <ReviewComponent review={rev}></ReviewComponent>)}
+                {reviews && reviews.length >  0 && reviews.map(rev => <ReviewComponent key={rev.id} review={rev}></ReviewComponent>)}
             </View>
         )}
      

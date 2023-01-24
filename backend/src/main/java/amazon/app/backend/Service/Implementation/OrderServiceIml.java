@@ -198,7 +198,15 @@ public class OrderServiceIml implements OrderService {
         return res;
     }
     private Cart clearCart(Cart cart) {
+        Set<OrderItem> orderItems = cart.getOrderItems();
         cart.setOrderItems(new HashSet<>());
+        if(orderItems.size() > 0) {
+            orderItems.stream().forEach(item -> {
+                item.setCart(null);
+                orderItemRepos.save(item);
+            });
+        }
+       
         cart.setTotalPrice(0);
         cart.setTotalQuantity(0);
         return cartRepos.save(cart);

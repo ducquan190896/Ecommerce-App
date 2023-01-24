@@ -14,6 +14,13 @@ export default ( state= initalState, action) => {
                 reviews: action.payload,
                 reviewSuccess: true,
             }
+        case "add_review_authUser":
+            return {
+                ...state,
+                reviews: state.reviews.add(action.payload),
+                review: action.payload,
+                reviewSuccess: true
+            }
         case "error_review":
             return {
                 ...state,

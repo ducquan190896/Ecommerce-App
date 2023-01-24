@@ -48,7 +48,7 @@ public class OrderController {
     public ResponseEntity<List<OrderResponse>> getAllByCloseStatus() {
         return new ResponseEntity<>(orderService.getOrdersByStatus(StatusOrder.CLOSE), HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+   // @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/id/{id}")
     public ResponseEntity<OrderResponse> getById(@PathVariable Long id) {
         return new ResponseEntity<>(orderService.getOrderById(id), HttpStatus.OK);

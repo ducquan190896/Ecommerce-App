@@ -7,8 +7,14 @@ import { Foundation } from '@expo/vector-icons';
 
 const HomeProductDetail = ({item}) => {
     const tw = useTailwind()
+    // const navigation = useNavigation()
+
+    const navigateToProductFunction = () => {
+      //navigation.navigate("ProductScreen", {productId : item.id})
+    }
+
   return (
-     <TouchableOpacity activeOpacity={0.5} style={[tw('w-full  my-2 rounded-lg flex-row border border-gray-200 border-2 items-center justify-between'), styles.boxWithShadow]}>
+     <TouchableOpacity onPress={navigateToProductFunction} activeOpacity={0.5} style={[tw('w-full  my-2 rounded-lg flex-row border border-gray-200 border-2 items-center justify-between'), styles.boxWithShadow]}>
    
         <Image source={item && item.imageUrls && item.imageUrls.lenght > 0 ? {uri: item.imageUrls[0]} : require("../images/shoes-wasatch-running-3.png")} style={[tw('w-1/2 h-48 rounded-lg'), styles.image]}></Image> 
        

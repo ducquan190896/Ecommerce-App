@@ -1,0 +1,55 @@
+{
+    "id": 2,
+    "username": "quan2",
+    "email": "quan2@gmail.com",
+    "trackingNumber": "d5d47b7c-3830-43d9-ac00-930007f98ea5",
+    "status": "OPEN",
+    "totalPrice": 1200.0,
+    "totalQuantity": 6,
+    "dateCreated": "2023-01-24 13:43",
+    "dateUpdated": "2023-01-24 13:43",
+    "shippingAddress": {
+        "id": 3,
+        "street": "tutkjantie 2",
+        "city": "oulu",
+        "country": "finland",
+        "zipCode": "90570",
+        "billing": false,
+        "shipping": true
+    },
+    "billingAddress": {
+        "id": 4,
+        "street": "tutkjantie 5",
+        "city": "oulu",
+        "country": "finland",
+        "zipCode": "90570",
+        "billing": true,
+        "shipping": false
+    },
+    "orderedProducts": [
+        {
+            "productId": 8,
+            "imageUrl": null,
+            "name": "sweet pant",
+            "productCode": "000118",
+            "unitPrice": 200.0,
+            "quantity": 3
+        },
+        {
+            "productId": 7,
+            "imageUrl": null,
+            "name": "summer hat reebok",
+            "productCode": "000117",
+            "unitPrice": 200.0,
+            "quantity": 2
+        },
+        {
+            "productId": 6,
+            "imageUrl": null,
+            "name": "goalkeeper gloves Neuer",
+            "productCode": "000116",
+            "unitPrice": 200.0,
+            "quantity": 1
+        }
+    ]
+}
