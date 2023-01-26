@@ -1,10 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StripeProvider } from '@stripe/stripe-react-native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import {TailwindProvider} from 'tailwind-rn';
 import Store from './Reducers/Store';
+import AccountScreen from './Screens/AccountScreen';
 import AdminHome from './Screens/AdminHome';
 import BillingAddressScreen from './Screens/BillingAddressScreen';
 import CartScreen from './Screens/CartScreen';
@@ -17,6 +19,7 @@ import OrderDetailScreenAdmin from './Screens/OrderDetailScreenAdmin';
 import OrdersScreenOfAdmin from './Screens/OrdersScreenOfAdmin';
 import OrdersScreenOfUser from './Screens/OrdersScreenOfUser';
 import OrdersScreenOfUserIDByAdmin from './Screens/OrdersScreenOfUserIDByAdmin';
+import PaymentScreen from './Screens/PaymentScreen';
 import ProductScreen from './Screens/ProductScreen';
 import ProductsListAdmin from './Screens/ProductsListAdmin';
 import RegisterScreen from './Screens/RegisterScreen';
@@ -32,31 +35,38 @@ export default function App() {
     <TailwindProvider utilities={utilities}>  
       
     <Provider store={Store}>
+    <StripeProvider
+    publishableKey='pk_test_51MUSMjB26AraqjBvixNemfDELReJWSiRnFUJsWxjROEyuDvE9q8uFDfHZQGTarcyLdSPHrXBW890ARCVzJzoVsRN00ZZjxHZAv'
+    >
     <StatusBar backgroundColor='#22e3dd'></StatusBar>
    
-    {/* <NavigationContainer>
-        <stack.Navigator>
-          <stack.Screen options={{headerShown: false}} name="Home" component={Home}></stack.Screen>
-        </stack.Navigator>
-    </NavigationContainer> */}
-    
-    {/* <ProductScreen></ProductScreen> */}
-    {/* <LoginScreen></LoginScreen> */}
-    {/* <RegisterScreen></RegisterScreen> */}
-    {/* <ChangePasswordScreen></ChangePasswordScreen> */}
-    {/* <CartScreen></CartScreen> */}
-    {/* <ShippingAddress></ShippingAddress> */}
-    {/* <BillingAddressScreen></BillingAddressScreen> */}
-    {/* <OrdersScreenOfUser></OrdersScreenOfUser> */}
-    {/* <OrderDetailScreen></OrderDetailScreen> */}
-    {/* <AdminHome></AdminHome> */}
-    {/* <OrdersScreenOfAdmin></OrdersScreenOfAdmin> */}
-    {/* <OrderDetailScreenAdmin></OrderDetailScreenAdmin> */}
-    {/* <UsersScreenAdmin></UsersScreenAdmin> */}
-    {/* <OrdersScreenOfUserIDByAdmin></OrdersScreenOfUserIDByAdmin> */}
-    {/* <ProductsListAdmin></ProductsListAdmin> */}
-    {/* <UpdateProductScreenAdmin></UpdateProductScreenAdmin> */}
-    <CreateProductScreenAdmin></CreateProductScreenAdmin>
+   {/* <NavigationContainer>
+       <stack.Navigator>
+         <stack.Screen options={{headerShown: false}} name="Home" component={Home}></stack.Screen>
+       </stack.Navigator>
+   </NavigationContainer> */}
+   
+   {/* <ProductScreen></ProductScreen> */}
+   {/* <LoginScreen></LoginScreen> */}
+   {/* <RegisterScreen></RegisterScreen> */}
+   {/* <ChangePasswordScreen></ChangePasswordScreen> */}
+   {/* <CartScreen></CartScreen> */}
+   {/* <ShippingAddress></ShippingAddress> */}
+   {/* <BillingAddressScreen></BillingAddressScreen> */}
+   {/* <OrdersScreenOfUser></OrdersScreenOfUser> */}
+   {/* <OrderDetailScreen></OrderDetailScreen> */}
+   {/* <AdminHome></AdminHome> */}
+   {/* <OrdersScreenOfAdmin></OrdersScreenOfAdmin> */}
+   {/* <OrderDetailScreenAdmin></OrderDetailScreenAdmin> */}
+   {/* <UsersScreenAdmin></UsersScreenAdmin> */}
+   {/* <OrdersScreenOfUserIDByAdmin></OrdersScreenOfUserIDByAdmin> */}
+   {/* <ProductsListAdmin></ProductsListAdmin> */}
+   {/* <UpdateProductScreenAdmin></UpdateProductScreenAdmin> */}
+   <CreateProductScreenAdmin></CreateProductScreenAdmin>
+   {/* <PaymentScreen></PaymentScreen> */}
+   {/* <AccountScreen></AccountScreen> */}
+    </StripeProvider>
+ 
     </Provider>
  
   </TailwindProvider>

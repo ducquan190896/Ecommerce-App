@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.stripe.model.PaymentIntent;
+
 import amazon.app.backend.Entity.StatusOrder;
+import amazon.app.backend.Entity.Request.PaymentInfor;
 import amazon.app.backend.Entity.Response.OrderResponse;
 import amazon.app.backend.Service.OrderService;
 
@@ -68,4 +72,13 @@ public class OrderController {
         System.out.println("hello");
         return new ResponseEntity<>(orderService.createOrder(billingAddressId, shippingAddressId), HttpStatus.CREATED);
     }
+
+    @PostMapping("/createPaymentIntent")
+    public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfor paymentInfor) {
+        PaymentIntent paymentIntent = orderService.createPaymentIntent(paymentInfor);
+        String paymentStr = paymentIntent.toJson();
+        // String paymentStr = "hello";
+        return new ResponseEntity<>(paymentStr, HttpStatus.CREATED);
+    }
+    
 }

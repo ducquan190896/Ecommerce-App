@@ -6,6 +6,34 @@ export const resetOrder = () => (dispatch, getState) => {
     })
 }
 
+export const createOrder = (billingAddressId, shippingAddressId) => async (dispatch, getState) => {
+    try {
+        // const token = await AsyncStorage.getItem("token")
+        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc0NzU1MjkzLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.Xqj-r3Koo-vj8QUo49S1hFxRv-3E1YN3GVcFwxjKO4HhuSwYuR3ROvXHyOF5i7x31Na58pHJQgaoTaO5XepWfQ"
+        const res = await fetch(`http://10.0.2.2:8080/api/orders/billingAddress/${billingAddressId}/shippingAddress/${shippingAddressId}`, {
+            method: "POST",
+            headers: {
+                "Authorization": token
+            }
+        })
+        const data = await res.json()
+        console.log("get all orders")
+        console.log(data)
+
+        dispatch({
+            type: "get_authUser_orders",
+            payload: data
+        })
+
+
+    } catch (err) {
+        dispatch({
+            type: "order_error",
+            payload: err
+        })
+    }
+}
+
 export const getOrdersByAuth = () => async (dispatch, getState) => {
     try {
         // const token = await AsyncStorage.getItem("token")

@@ -10,6 +10,7 @@ import { Button, Switch } from '@rneui/base'
 import { createProduct, resetProducts, updateProduct } from '../Reducers/Actions/ProductActions'
 import { Alert } from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const CreateProductScreenAdmin = () => {
     
@@ -22,6 +23,7 @@ const CreateProductScreenAdmin = () => {
     const [name, setName] = useState(null)
     const [brand, setBrand] = useState(null)
     const [category, setCategory] = useState(null)
+    const [images, setImages] = useState([])
 
     const tw = useTailwind()
     const dispatch = useDispatch()
@@ -58,14 +60,57 @@ const CreateProductScreenAdmin = () => {
         }
     }, [isError, setIsError])
 
+    useEffect(() => {
+        if(images && images.length > 0) {
+            console.log(images)
+        }
+    }, [images, setImages])
+
     const uploadImages = async () => {
         const images = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
+            // allowsEditing: true,
+            allowsMultipleSelection: true,
+            selectionLimit: 3,
             aspect: [4, 3],
             quality: 1,
           })
           console.log(images)
+          const token = await AsyncStorage.getItem("token")
+        // const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDc3NjI1MSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.6BaJXyrg4JwjRv4KLt-ALaobpfdvBDmHwUpsc6np7CzgT_aOHVqzDjpfXwrs47r0mEPSKGWqeNjtO51_lDFICg"
+
+        const formdata = new FormData()
+        let n = 0;
+
+        if(!images.canceled) {
+            while(n < images.assets.length) {
+                const split = images.assets[n].uri.split('/')
+                const fileNameDot = split[split.length - 1].split(".")
+                const fileName = fileNameDot[0]
+                const imageFile = {
+                    uri: images.assets[n].uri,
+                    type: images.assets[0].type + "/" + fileNameDot[1],
+                    name: fileName
+                }
+                console.log(n)
+                console.log(imageFile)
+              await  formdata.append("file", imageFile)
+              n++;
+            }
+        }
+
+        const res = await fetch("http://10.0.2.2:8080/api/images/uploadImages", {
+            method: "POST",
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": token
+            },
+            body: formdata
+        })
+        const listResponse = await res.json()
+        setImages(listResponse)
+          
+
     }
 
     const submitFunction = async () => {
@@ -77,6 +122,9 @@ const CreateProductScreenAdmin = () => {
             brandName: brand,
             categoryName: category
         }
+        if(images && images.length > 0) {
+            form.imageUrls = images
+        }
         setIsLoading(true)
         await dispatch(createProduct(form))
         setIsLoading(false)
@@ -86,6 +134,7 @@ const CreateProductScreenAdmin = () => {
         setBrand(null)
         setPrice("0")
         setUnitsInStock("0")
+        setImages([])
     }
 
   return (

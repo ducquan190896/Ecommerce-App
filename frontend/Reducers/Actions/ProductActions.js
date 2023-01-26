@@ -128,8 +128,8 @@ export const openUpdateStatus = (updatedProduct) => (dispatch, getState) => {
 
 export const createProduct = (product) => async (dispatch, getState) => {
     try {
-          // const token = await AsyncStorage.getItem("token")
-          const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDY5NDA3NywiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.a32jYmC3rm6VLYFvsnWgcJZ4wEg6LjifkzbQZGcRPrYdhX7LQdPF5xN8gIMcASTn7y11NfpF4WjBvbO1Wx3RDw"
+        //   const token = await AsyncStorage.getItem("token")
+          const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDc3NjI1MSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.6BaJXyrg4JwjRv4KLt-ALaobpfdvBDmHwUpsc6np7CzgT_aOHVqzDjpfXwrs47r0mEPSKGWqeNjtO51_lDFICg"
         const res = await fetch("http://10.0.2.2:8080/api/products/", {
             method: "POST",
             headers: {

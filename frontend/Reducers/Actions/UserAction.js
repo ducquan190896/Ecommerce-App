@@ -51,23 +51,7 @@ export const registerUser = (form) => async (dispatch, getState) => {
         })
     }
 }
-export const logoutUser = (form) => async (dispatch, getState) => {
-    try {
 
-
-        await AsyncStorage.setItem("token", "")
-        dispatch({
-            type: "logout_user",
-            payload: data
-        })
-
-    } catch (err) {
-        dispatch({
-            type: "error_user",
-            payload: err
-        })
-    }
-}
 
 export const ChangePasswordUser = (form) => async (dispatch, getState) => {
     try {
@@ -178,3 +162,28 @@ export const updateUserToAdmin = (id) => async (dispatch, getState) => {
         })
     }
 }
+
+export const logOutUser = () => async (dispatch, getState) => {
+    try {
+        const token = await AsyncStorage.getItem("token")
+        await fetch("http://10.0.2.2:8080/logout", {
+            method: "GET",
+            headers: {
+                "Authorization": token
+            }
+        })
+        await AsyncStorage.setItem("token", "")
+
+        dispatch({
+            type: "logout_user",
+            payload: data
+        })
+
+    } catch (err) {
+        dispatch({
+            type: "error_user",
+            payload: err
+        }) 
+    }
+}
+

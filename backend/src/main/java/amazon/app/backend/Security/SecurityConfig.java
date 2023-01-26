@@ -56,6 +56,7 @@ public class SecurityConfig {
         .antMatchers("/api/images/**").permitAll()
         .antMatchers( HttpMethod.GET,"/api/brands/all").permitAll()
         .antMatchers( HttpMethod.GET,"/api/categories/all").permitAll()
+        // .antMatchers( HttpMethod.POST,"/api/orders/createPaymentIntent").permitAll()
         .antMatchers( "/api/brands/**").hasRole(Role.ADMIN.name())
         .antMatchers( "/api/categories/**").hasRole(Role.ADMIN.name())      
         .antMatchers("/api/products/**").hasRole(Role.ADMIN.name())
@@ -72,7 +73,7 @@ public class SecurityConfig {
 
         http.logout().permitAll()
         .addLogoutHandler((request, response, auth) -> {
-            SecurityContextHolder.clearContext();
+            SecurityContextHolder.getContext().setAuthentication(null);
             response.setHeader("Authorization", "");
         })
         .logoutSuccessHandler(logoutHandler);

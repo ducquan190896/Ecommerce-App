@@ -1,16 +1,24 @@
 package amazon.app.backend.Service.Implementation;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
 
 import amazon.app.backend.Entity.Address;
 import amazon.app.backend.Entity.Cart;
@@ -18,6 +26,7 @@ import amazon.app.backend.Entity.OrderItem;
 import amazon.app.backend.Entity.Orders;
 import amazon.app.backend.Entity.StatusOrder;
 import amazon.app.backend.Entity.Users;
+import amazon.app.backend.Entity.Request.PaymentInfor;
 import amazon.app.backend.Entity.Response.OrderResponse;
 import amazon.app.backend.Entity.Response.OrderedProductResponse;
 import amazon.app.backend.Exception.BadResultException;
@@ -29,19 +38,50 @@ import amazon.app.backend.Repository.OrderRepos;
 import amazon.app.backend.Repository.UserRepos;
 import amazon.app.backend.Service.OrderService;
 
+
 @Service
 public class OrderServiceIml implements OrderService {
     @Autowired
-    CartRepos cartRepos;
+    private CartRepos cartRepos;
     @Autowired
-    UserRepos userRepos;
+    private UserRepos userRepos;
     @Autowired
-    AddressRepos addressRepos;
+    private AddressRepos addressRepos;
     @Autowired
-    OrderItemRepos orderItemRepos;
+    private OrderItemRepos orderItemRepos;
     @Autowired
-    OrderRepos orderRepos;
+    private OrderRepos orderRepos;
+
     
+    
+
+    public OrderServiceIml(CartRepos cartRepos, UserRepos userRepos, AddressRepos addressRepos,
+            OrderItemRepos orderItemRepos, OrderRepos orderRepos, @Value("${stripe.key.secret}") String secretKey) {
+        this.cartRepos = cartRepos;
+        this.userRepos = userRepos;
+        this.addressRepos = addressRepos;
+        this.orderItemRepos = orderItemRepos;
+        this.orderRepos = orderRepos;
+        Stripe.apiKey = secretKey;
+    }
+
+    @Override
+    public PaymentIntent createPaymentIntent(PaymentInfor paymentInfor) {
+        try {
+            List<String> paymentMethodTypes = new ArrayList<>();
+        paymentMethodTypes.add("card");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("amount", paymentInfor.getAmount());
+        params.put("currency", paymentInfor.getCurrency());
+        // params.put("receipt_email", paymentInfor.getReceipt_email());
+        params.put("description", "quan_ecommerce");
+        params.put("payment_method_types", paymentMethodTypes);
+        return PaymentIntent.create(params);
+        } catch (StripeException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
     @Override
     public OrderResponse createOrder(Long billingAddressId, Long shippingAddressId) {
