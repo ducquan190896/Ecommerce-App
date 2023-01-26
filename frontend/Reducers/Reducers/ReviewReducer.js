@@ -17,7 +17,7 @@ export default ( state= initalState, action) => {
         case "add_review_authUser":
             return {
                 ...state,
-                reviews: state.reviews.add(action.payload),
+                reviews: state.reviews.push(action.payload),
                 review: action.payload,
                 reviewSuccess: true
             }

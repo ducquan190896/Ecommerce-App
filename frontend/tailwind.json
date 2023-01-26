@@ -34,9 +34,34 @@
 			"left": 8
 		}
 	},
+	"top-8": {
+		"style": {
+			"top": 32
+		}
+	},
 	"top-2": {
 		"style": {
 			"top": 8
+		}
+	},
+	"top-4": {
+		"style": {
+			"top": 16
+		}
+	},
+	"right-4": {
+		"style": {
+			"right": 16
+		}
+	},
+	"left-6": {
+		"style": {
+			"left": 24
+		}
+	},
+	"z-10": {
+		"style": {
+			"zIndex": 10
 		}
 	},
 	"my-2": {
@@ -111,6 +136,16 @@
 	"mt-2": {
 		"style": {
 			"marginTop": 8
+		}
+	},
+	"mt-10": {
+		"style": {
+			"marginTop": 40
+		}
+	},
+	"mr-10": {
+		"style": {
+			"marginRight": 40
 		}
 	},
 	"flex": {
@@ -208,6 +243,11 @@
 	"justify-between": {
 		"style": {
 			"justifyContent": "space-between"
+		}
+	},
+	"justify-evenly": {
+		"style": {
+			"justifyContent": "space-evenly"
 		}
 	},
 	"rounded-lg": {
@@ -388,6 +428,12 @@
 			"paddingRight": 40
 		}
 	},
+	"px-6": {
+		"style": {
+			"paddingLeft": 24,
+			"paddingRight": 24
+		}
+	},
 	"pl-4": {
 		"style": {
 			"paddingLeft": 16
@@ -403,9 +449,19 @@
 			"paddingBottom": 8
 		}
 	},
+	"pt-8": {
+		"style": {
+			"paddingTop": 32
+		}
+	},
 	"pb-4": {
 		"style": {
 			"paddingBottom": 16
+		}
+	},
+	"pl-20": {
+		"style": {
+			"paddingLeft": 80
 		}
 	},
 	"text-center": {

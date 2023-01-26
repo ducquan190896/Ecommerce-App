@@ -9,15 +9,19 @@ import AdminHome from './Screens/AdminHome';
 import BillingAddressScreen from './Screens/BillingAddressScreen';
 import CartScreen from './Screens/CartScreen';
 import ChangePasswordScreen from './Screens/ChangePasswordScreen';
+import CreateProductScreenAdmin from './Screens/CreateProductScreenAdmin';
 import Home from './Screens/Home';
 import LoginScreen from './Screens/LoginScreen';
 import OrderDetailScreen from './Screens/OrderDetailScreen';
 import OrderDetailScreenAdmin from './Screens/OrderDetailScreenAdmin';
 import OrdersScreenOfAdmin from './Screens/OrdersScreenOfAdmin';
 import OrdersScreenOfUser from './Screens/OrdersScreenOfUser';
+import OrdersScreenOfUserIDByAdmin from './Screens/OrdersScreenOfUserIDByAdmin';
 import ProductScreen from './Screens/ProductScreen';
+import ProductsListAdmin from './Screens/ProductsListAdmin';
 import RegisterScreen from './Screens/RegisterScreen';
 import ShippingAddress from './Screens/ShippingAddress';
+import UpdateProductScreenAdmin from './Screens/UpdateProductScreenAdmin';
 import UsersScreenAdmin from './Screens/UsersScreenAdmin';
 import utilities from './tailwind.json';
 
@@ -48,7 +52,11 @@ export default function App() {
     {/* <AdminHome></AdminHome> */}
     {/* <OrdersScreenOfAdmin></OrdersScreenOfAdmin> */}
     {/* <OrderDetailScreenAdmin></OrderDetailScreenAdmin> */}
-    <UsersScreenAdmin></UsersScreenAdmin>
+    {/* <UsersScreenAdmin></UsersScreenAdmin> */}
+    {/* <OrdersScreenOfUserIDByAdmin></OrdersScreenOfUserIDByAdmin> */}
+    {/* <ProductsListAdmin></ProductsListAdmin> */}
+    {/* <UpdateProductScreenAdmin></UpdateProductScreenAdmin> */}
+    <CreateProductScreenAdmin></CreateProductScreenAdmin>
     </Provider>
  
   </TailwindProvider>

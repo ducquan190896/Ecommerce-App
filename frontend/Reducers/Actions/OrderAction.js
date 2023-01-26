@@ -177,3 +177,33 @@ export const getOrdersByIdByAdmin = (orderId) => async (dispatch, getState) => {
         })
     }
 }
+
+export const getordersOfUserIdByAdmin = (userId) => async (dispatch, getState) => {
+    try {
+        // const token = await AsyncStorage.getItem("token")
+        const {orders} = getState().ORDERS
+        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDY1NTA0MiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.YDolQCbjT33XfAaZgUdUZq8GLj_4bOy_vo0O8kpDuptdqOWvFOW4y5scT2Nm90RtsYHl70WfxuKHy_u66X-G_A"
+        const res = await fetch(`http://10.0.2.2:8080/api/orders/allByUserId/${userId}`, {
+            method: "GET",
+            headers: {
+                "Authorization": token
+            }
+        })
+        const data = await res.json()
+        console.log("get_orders_of_userId_byAdmin")
+        console.log(data)
+
+        dispatch({
+            type: "get_orders_of_userId_byAdmin",
+            payload: data
+        })
+    
+
+
+    } catch (err) {
+        dispatch({
+            type: "order_error",
+            payload: err
+        })
+    }
+}

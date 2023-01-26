@@ -10,6 +10,7 @@ import amazon.app.backend.Entity.Response.UserResponse;
 public interface UserService {
     UserResponse saveUser(UserSignup userSignup);
     List<UserResponse> getListUsers();
+    List<UserResponse> getListUsersByName(String username);
     UserResponse getUserById(Long id);
     UserResponse getUserByUsername(String username);
     UserResponse getUserByEmail(String email);

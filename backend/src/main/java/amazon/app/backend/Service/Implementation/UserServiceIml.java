@@ -86,6 +86,10 @@ public class UserServiceIml implements UserService, UserDetailsService {
 
     }
     @Override
+    public List<UserResponse> getListUsersByName(String username) {
+        return userRepos.findByUsernameContaining(username).stream().map(user -> new UserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getRole().name())).collect(Collectors.toList());
+    }
+    @Override
     public List<UserResponse> getListUsers() {
         // Boolean isAdmin = isCheckAdmin();
         // if(isAdmin == false) {

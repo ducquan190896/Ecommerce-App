@@ -34,6 +34,11 @@ public class UserController {
     public ResponseEntity<List<UserResponse>> getAll() {
         return new ResponseEntity<>(userService.getListUsers(), HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/searchName/{username}")
+    public ResponseEntity<List<UserResponse>> getAllByUsername(@PathVariable String username) {
+        return new ResponseEntity<List<UserResponse>>(userService.getListUsersByName(username), HttpStatus.OK);
+    }
     @GetMapping("/test")
     public ResponseEntity<Users> test() {
         return new ResponseEntity<>(userService.test(), HttpStatus.OK);

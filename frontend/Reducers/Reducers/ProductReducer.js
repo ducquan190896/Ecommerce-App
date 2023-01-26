@@ -25,6 +25,27 @@ export default (state = initialState, action) => {
                 product: action.payload,
                 productSuccess: true
             }
+        case "show_update_status": 
+            return {
+                ...state,
+                updateStatus: true,
+                updatedProduct: action.payload
+            }
+        case "update_product":
+            return {
+                ...state,
+                updatedProduct: action.payload,
+                products: state.products.map(pro => pro.id == action.payload.id ? action.payload : pro),
+                productSuccess: true,
+                updateStatus: false
+            }
+        case "create_product":
+            return {
+                ...state,
+                product: action.payload,
+                products: state.products.push(action.payload),
+                productSuccess: true
+            }
          case "get_products_category":
                 return {
                     ...state,

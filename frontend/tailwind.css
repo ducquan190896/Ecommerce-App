@@ -26,8 +26,28 @@
   left: 0.5rem
 }
 
+.top-8 {
+  top: 2rem
+}
+
 .top-2 {
   top: 0.5rem
+}
+
+.top-4 {
+  top: 1rem
+}
+
+.right-4 {
+  right: 1rem
+}
+
+.left-6 {
+  left: 1.5rem
+}
+
+.z-10 {
+  z-index: 10
 }
 
 .my-2 {
@@ -88,6 +108,14 @@
 
 .mt-2 {
   margin-top: 0.5rem
+}
+
+.mt-10 {
+  margin-top: 2.5rem
+}
+
+.mr-10 {
+  margin-right: 2.5rem
 }
 
 .flex {
@@ -164,6 +192,10 @@
 
 .justify-between {
   justify-content: space-between
+}
+
+.justify-evenly {
+  justify-content: space-evenly
 }
 
 .rounded-lg {
@@ -288,6 +320,11 @@
   padding-right: 2.5rem
 }
 
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem
+}
+
 .pl-4 {
   padding-left: 1rem
 }
@@ -300,8 +337,16 @@
   padding-bottom: 0.5rem
 }
 
+.pt-8 {
+  padding-top: 2rem
+}
+
 .pb-4 {
   padding-bottom: 1rem
+}
+
+.pl-20 {
+  padding-left: 5rem
 }
 
 .text-center {

@@ -36,12 +36,18 @@ export default (state = initialState, action) => {
                 closeOrders: action.payload,
                 orderSuccess: true
             }
+        case "get_orders_of_userId_byAdmin":
+            return {
+                ...state,
+                orders: action.payload,
+                orderSuccess: true
+            }
         case "update_close_status_order":
             return {
                 ...state,
                 order: action.payload,
                 orderSuccess: true,
-                // closeOrders: state.closeOrders.add(action.payload),
+                // closeOrders: state.closeOrders.push(action.payload),
                 // openOrders: state.openOrders.filter(ord => ord.id != action.payload.id)
             }
         case "order_error":

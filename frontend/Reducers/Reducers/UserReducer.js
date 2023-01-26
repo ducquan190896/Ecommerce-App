@@ -38,6 +38,24 @@ export default (state = initalState, action) => {
                 user: action.payload,
                 userSuccess: true
             }
+        case "get_list_users":
+            return {
+                ...state,
+                users: action.payload,
+                userSuccess: true 
+            }
+        case "get_list_users_by_search_name":
+            return {
+                ...state,
+                users: action.payload,
+                userSuccess: true
+            }
+        case "update_user_to_admin":
+            return {
+                ...state,
+                users: state.users.map(us => us.id == action.payload.id ? action.payload : us),
+                userSuccess: true
+            }
         case "error_user":
             return {
                 ...state,
