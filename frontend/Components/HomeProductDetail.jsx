@@ -4,13 +4,15 @@ import { useTailwind } from 'tailwind-rn/dist'
 import { Rating } from '@rneui/base'
 import RatingComponent from './RatingComponent'
 import { Foundation } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/native'
 
 const HomeProductDetail = ({item}) => {
     const tw = useTailwind()
-    // const navigation = useNavigation()
+    const navigation = useNavigation()
 
     const navigateToProductFunction = () => {
-      //navigation.navigate("ProductScreen", {productId : item.id})
+      navigation.navigate("ProductScreen", {productId : item.id})
+      console.log(item.id)
     }
 
   return (

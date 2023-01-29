@@ -153,6 +153,11 @@
 			"marginTop": 40
 		}
 	},
+	"mt-8": {
+		"style": {
+			"marginTop": 32
+		}
+	},
 	"mr-10": {
 		"style": {
 			"marginRight": 40

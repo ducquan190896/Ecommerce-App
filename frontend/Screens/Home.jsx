@@ -72,8 +72,8 @@ const Home = () => {
     
   }
 
-  const loadProductsByBrand = async ()=> {
-    await dispatch(getProductsByBrand(brandOption))
+  const loadProductsByBrand = async (brandName)=> {
+    await dispatch(getProductsByBrand(brandName))
     if(products) {
       console.log(products)
      }

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import HeaderHomeComponent from '../Components/HeaderHomeComponent'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProductById, getProducts, getProductsByName } from '../Reducers/Actions/ProductActions'
+import { getProductById, getProducts, getProductsByName, resetProducts } from '../Reducers/Actions/ProductActions'
 import DummyProducts from "../DummyData/Products.json"
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons'; 
@@ -16,15 +16,15 @@ import LoadingComponent from '../Components/LoadingComponent'
 import ReviewComponent from '../Components/ReviewComponent'
 import { Picker } from '@react-native-picker/picker'
 import ErrorComponent from '../Components/ErrorComponent'
+import { addToCart } from '../Reducers/Actions/CartAction'
 
 
 
 
 const ProductScreen = () => {
-    const [searchValue, setSearchValue] = useState(null)
-    const [showHome, setShowHome] = useState(true);
-    // const navigation = useNavigation()
-    //const params = useRoute()
+
+    const navigation = useNavigation()
+  
     const [dot, setDot] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -36,18 +36,18 @@ const ProductScreen = () => {
     const dispatch = useDispatch()
     const {reviews, review, reviewSuccess, reviewError} = useSelector(state => state.REVIEWS)
     const {products, product, productSuccess, productError, message: productMessage, updateStatus: updateProductStatus, brandStatus, nameStatus, categoryStatus } = useSelector(state => state.PRODUCTS)
+    const {user, userSuccess, userError} = useSelector(state => state.USERS)
+
     const images = [
        require( "../images/shoes-wasatch-running-3.png"),
         require("../images/4-40004_transparent-nike-shoe-png-png-download.png"),
         require("../images/airpods.jpg")
     ]
 
-    // replace route params right here
-    // const params = useRoute()
-    // const {productId} = params
-    const productId = 5;
-    const testProducts = DummyProducts;
-    // const product = testProducts[0]
+   
+    const {params} = useRoute()
+    const {productId} = params
+
 
     const loadProductById = useCallback(async () => {
         await dispatch(getProductById(productId))
@@ -59,10 +59,12 @@ const ProductScreen = () => {
 
     useEffect(() => {
         
+       if(productId) {
         setIsLoading(true)
         loadProductById().then(() => loadReviews()).then(() => setIsLoading(false)).catch(() => setIsError(true))
+       }
         
-    }, [dispatch,  productId])
+    }, [productId])
 
     useEffect(() => {
         if(productError ||reviewError) {
@@ -71,6 +73,13 @@ const ProductScreen = () => {
             }, 3000);
         }
     }, [productError, reviewError])
+    
+    useEffect(() => {
+        if(productSuccess || productError) {
+            dispatch(resetProducts())
+        }
+    }, [ dispatch, productSuccess, productError])
+    
   
     const loadProducts = async () => {
         await dispatch(getProducts())
@@ -82,8 +91,8 @@ const ProductScreen = () => {
 
 
     const onBackFunction = () => {
-          //loadProducts()  
-            // navigation.navigate("Home")
+          loadProducts()  
+            navigation.navigate("Home")
       }
       const windowwith = useWindowDimensions().width 
 
@@ -92,35 +101,49 @@ const ProductScreen = () => {
        setDot(viewableItems[0].index)
       }, [])
 
-    const addToCart = () => {
-        console.log("addToCart")
+    const addToCartFunction = () => {
+        if(user) {
+           console.log("add to cart")
+            dispatch(addToCart(productId, 1))
+           
+        } else {
+            navigation.navigate("AccountStack", {screen: "Login"})
+        }
+       
     }
     const BuyNow = () => {
         console.log("Buy Now")
+        navigation.navigate("CartStack", {screen: "Cart"})
     }
     const showReviewForm = () => {
-        setAddingReview(prev => !prev)
-    }
-    const addReviewToServer = async () => {
-   // need auth user token      
-         if(reviewDescription) {
-            const obj ={
-                rating: reviewRating,
-                description: reviewDescription,
-                productId: productId
-            }
-            setIsLoading(true)
-            await dispatch(addReview(obj))
-            await loadReviews()
-            setIsLoading(false)
-    
-            setReviewDescription(null)
-            setReviewRating(5)
-            setAddingReview(false)
+        if(user) {
+            setAddingReview(prev => !prev)
         } else {
-            Alert.alert("please type your description")
+             navigation.navigate("AccountStack", {screen: "Login"})
         }
        
+    }
+    const addReviewToServer = async () => {
+   // need auth user token    
+      
+            if(reviewDescription) {
+                const obj ={
+                    rating: reviewRating,
+                    description: reviewDescription,
+                    productId: productId
+                }
+                setIsLoading(true)
+                await dispatch(addReview(obj))
+                await loadReviews()
+                setIsLoading(false)
+        
+                setReviewDescription(null)
+                setReviewRating(5)
+                setAddingReview(false)
+            } else {
+                Alert.alert("please type your description")
+            }
+    
     }
 
     
@@ -190,13 +213,15 @@ const ProductScreen = () => {
                 <Text style={tw('text-lg my-2 text-black ml-2')}>Brand: {product.brandName}
                 </Text>
                 {product.unitsInStock < 20 && <Text style={tw('text-red-500 text-lg my-2 ml-2')}>Only {product.unitsInStock} left in stock - Order soon</Text>}
-                <Button onPress={addToCart} title="Add To Cart" buttonStyle={tw('w-full font-bold text-lg bg-amber-300 rounded-lg py-4 my-2')}></Button>
+                <Button onPress={addToCartFunction} title="Add To Cart" buttonStyle={tw('w-full font-bold text-lg bg-amber-300 rounded-lg py-4 my-2')}></Button>
                 <Button onPress={BuyNow} title="Buy Now" buttonStyle={tw('w-full font-bold text-lg bg-amber-500 rounded-lg py-4 my-2')}></Button>
                 <Text style={tw('text-2xl mt-4 mb-2 text-[#22e3dd] font-bold')}>Reviews</Text>
-                <TouchableOpacity onPress={showReviewForm} style={tw('my-2')}>
-                  <Text style={tw('text-lg font-bold my-2 text-red-500 ml-2')}>Leave your review
-                    </Text>
-                </TouchableOpacity>
+              
+                    <TouchableOpacity onPress={showReviewForm} style={tw('my-2')}>
+                    <Text style={tw('text-lg font-bold my-2 text-red-500 ml-2')}>Leave your review
+                      </Text>
+                  </TouchableOpacity>
+                
                 {addingReview && (
                     <TouchableWithoutFeedback>
                     <View style={tw('w-full my-2')}>
@@ -215,7 +240,9 @@ const ProductScreen = () => {
                             {[1, 2, 3, 4, 5].map(rate => <Picker.Item key={rate} label={rate.toString()} value={rate}></Picker.Item>)}
                             </Picker>
                         </View>
-                        <Button onPress={addReviewToServer} title="Add Review" buttonStyle={tw('w-full font-bold text-lg bg-amber-500 rounded-full py-4 my-2')}></Button>
+                       
+                         <Button onPress={addReviewToServer} title="Add Review" buttonStyle={tw('w-full font-bold text-lg bg-amber-500 rounded-full py-4 my-2')}></Button>
+                    
                     </View>
                     </TouchableWithoutFeedback>
                 )}

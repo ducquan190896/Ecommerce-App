@@ -16,6 +16,7 @@ import { Picker } from '@react-native-picker/picker'
 import { addBillingAddress, addShippingAddress, resetAddress, updateBillingAddress, updateShippingAddress } from '../Reducers/Actions/AddressAction'
 import { Platform } from 'react-native';
 import { Keyboard } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 
 const BillingAddressScreen = () => {
@@ -30,7 +31,7 @@ const BillingAddressScreen = () => {
   const { shippingAddress, billingAddress, address, addressSuccess, addressError, message, billingAddressStatus,  shippingAddressStatus} = useSelector(state => state.ADDRESSES)
   const dispatch = useDispatch()
   const tw = useTailwind()
-
+    const navigation = useNavigation()
   const loadCountries = useCallback(async () => {
       await dispatch(getCountries())
          
@@ -89,7 +90,7 @@ const BillingAddressScreen = () => {
   
 
   const goBackFunction = () => {
-       //navigation.navigate("CartScreen")        
+       navigation.navigate("ShippingAddress")        
   }
 
   const submitBillingAddress = async () => {
@@ -102,17 +103,17 @@ const BillingAddressScreen = () => {
               zipCode: zipCode
           }
         //  console.log(form)
-        if(updateBillingAddress && billingAddress) {
-          setIsLoading(true)
-          await dispatch(updateBillingAddress( billingAddress.id ,form))
-          setIsLoading(false)   
-          //navigation.navigate("BillingAddressScreen") 
-       }    else {
+    //     if(updateBillingAddress && billingAddress) {
+    //       setIsLoading(true)
+    //       await dispatch(updateBillingAddress( billingAddress.id ,form))
+    //       setIsLoading(false)   
+    //       //navigation.navigate("BillingAddressScreen") 
+    //    }    else {
           setIsLoading(true)
           await dispatch(addBillingAddress(form))
           setIsLoading(false)   
-          //navigation.navigate("BillingAddressScreen")
-       }
+          navigation.navigate("PaymentScreen")
+    //    }
        setStreet(null)                        
       setZipCode(null)
 

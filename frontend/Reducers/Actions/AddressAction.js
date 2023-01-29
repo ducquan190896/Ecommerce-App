@@ -1,12 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-const token1 = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc0NTIxMTA4LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.Ru0aPuMt9LGjKO9omBTUDiaTOBz8L8pqxXZtcDejGqi-i2IJgEPno1Ts17CvE4m6iWxK4eT6-oaRDE9l0FjXxQ"
+
 export const getAddressById = (id) => async (dispatch, getState) => {
     try {
-       // const token = await AsyncStorage.getItem("token")
+       const token = await AsyncStorage.getItem("token")
         const res = await fetch(`http://10.0.2.2:8080/api/address/id/${id}`, {
             method: "GET",
             headers: {
-                "Authorization": token1
+                "Authorization": token
             }
         })
         const data = await res.json()
@@ -28,13 +28,13 @@ export const getAddressById = (id) => async (dispatch, getState) => {
 
 export const addShippingAddress = (form) => async (dispatch, getState) => {
     try {
-      //  const token = await AsyncStorage.getItem("token")
+       const token = await AsyncStorage.getItem("token")
         console.log(form)
         const res = await fetch("http://10.0.2.2:8080/api/address/shippingAddress", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": token1
+                "Authorization": token
             },
             body: JSON.stringify(form)
         })
@@ -57,12 +57,12 @@ export const addShippingAddress = (form) => async (dispatch, getState) => {
 
 export const addBillingAddress = (form) => async (dispatch, getState) => {
     try {
-        //const token = await AsyncStorage.getItem("token")
+        const token = await AsyncStorage.getItem("token")
         const res = await fetch("http://10.0.2.2:8080/api/address/billingAddress", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": token1
+                "Authorization": token
             },
             body: JSON.stringify(form)
         })

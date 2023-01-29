@@ -6,10 +6,11 @@ export const resetOrder = () => (dispatch, getState) => {
     })
 }
 
+//authenticated user access
 export const createOrder = (billingAddressId, shippingAddressId) => async (dispatch, getState) => {
     try {
-        // const token = await AsyncStorage.getItem("token")
-        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuIiwiZXhwIjoxNjc0NzU1MjkzLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXX0.Xqj-r3Koo-vj8QUo49S1hFxRv-3E1YN3GVcFwxjKO4HhuSwYuR3ROvXHyOF5i7x31Na58pHJQgaoTaO5XepWfQ"
+        const token = await AsyncStorage.getItem("token")
+        
         const res = await fetch(`http://10.0.2.2:8080/api/orders/billingAddress/${billingAddressId}/shippingAddress/${shippingAddressId}`, {
             method: "POST",
             headers: {
@@ -34,10 +35,10 @@ export const createOrder = (billingAddressId, shippingAddressId) => async (dispa
     }
 }
 
+//authenticated user access
 export const getOrdersByAuth = () => async (dispatch, getState) => {
     try {
-        // const token = await AsyncStorage.getItem("token")
-        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuMiIsImV4cCI6MTY3NDU5OTkxNSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl19.pyOP4jd_lFA__0bOPg0_EFOhqwtrGyWDD4b08K9RGJl1rHePNqm_C8rdA-TSNHgq0Ktx7Tn32KvdLIR_NIaq6g"
+        const token = await AsyncStorage.getItem("token")    
         const res = await fetch("http://10.0.2.2:8080/api/orders/allByAuthUser", {
             method: "GET",
             headers: {
@@ -61,10 +62,11 @@ export const getOrdersByAuth = () => async (dispatch, getState) => {
         })
     }
 }
+
+//authenticated user access
 export const getOrdersByIdByAuth = (id) => async (dispatch, getState) => {
     try {
-         // const token = await AsyncStorage.getItem("token")
-         const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxdWFuMiIsImV4cCI6MTY3NDU5OTkxNSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl19.pyOP4jd_lFA__0bOPg0_EFOhqwtrGyWDD4b08K9RGJl1rHePNqm_C8rdA-TSNHgq0Ktx7Tn32KvdLIR_NIaq6g"
+         const token = await AsyncStorage.getItem("token")
         const res = await fetch(`http://10.0.2.2:8080/api/orders/id/${id}`, {
             method: "GET",
             headers: {
@@ -88,10 +90,11 @@ export const getOrdersByIdByAuth = (id) => async (dispatch, getState) => {
         })
     }
 }
+
+//admin access
 export const getOpenOrdersByAdmin = () => async (dispatch, getState) => {
     try {
-        // const token = await AsyncStorage.getItem("token")
-        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDYwMTk2NywiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.ZQwpwP7oy38c2cTGiuIZ_LORavFuqi5BdQQ0xgDlMdQ3i-TwIiYMnQyT4eGAMTeiqrKb0HWerwNhtdUimysXCg"
+        const token = await AsyncStorage.getItem("token")
         const res = await fetch("http://10.0.2.2:8080/api/orders/allByOpenStatus", {
             method: "GET",
             headers: {
@@ -116,11 +119,11 @@ export const getOpenOrdersByAdmin = () => async (dispatch, getState) => {
     }
 }
 
+//admin access
 export const getCloseOrdersByAdmin = () => async (dispatch, getState) => {
     try {
-        // const token = await AsyncStorage.getItem("token")
+        const token = await AsyncStorage.getItem("token")
         const {orders} = getState().ORDERS
-        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDYwMTk2NywiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.ZQwpwP7oy38c2cTGiuIZ_LORavFuqi5BdQQ0xgDlMdQ3i-TwIiYMnQyT4eGAMTeiqrKb0HWerwNhtdUimysXCg"
         const res = await fetch("http://10.0.2.2:8080/api/orders/allByCloseStatus", {
             method: "GET",
             headers: {
@@ -146,11 +149,10 @@ export const getCloseOrdersByAdmin = () => async (dispatch, getState) => {
     }
 }
 
+//admin access
 export const updateCloseStatusOfOrder = (orderId) => async (dispatch, getState) => {
     try {
-        // const token = await AsyncStorage.getItem("token")
-        
-        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDYwMTk2NywiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.ZQwpwP7oy38c2cTGiuIZ_LORavFuqi5BdQQ0xgDlMdQ3i-TwIiYMnQyT4eGAMTeiqrKb0HWerwNhtdUimysXCg"
+        const token = await AsyncStorage.getItem("token")
         const res = await fetch(`http://10.0.2.2:8080/api/orders/id/${orderId}`, {
             method: "PUT",
             headers: {
@@ -176,11 +178,11 @@ export const updateCloseStatusOfOrder = (orderId) => async (dispatch, getState) 
     }
 }
 
+//admin access
 export const getOrdersByIdByAdmin = (orderId) => async (dispatch, getState) => {
     try {
-        // const token = await AsyncStorage.getItem("token")
+        const token = await AsyncStorage.getItem("token")
         const {orders} = getState().ORDERS
-        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDYwMTk2NywiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.ZQwpwP7oy38c2cTGiuIZ_LORavFuqi5BdQQ0xgDlMdQ3i-TwIiYMnQyT4eGAMTeiqrKb0HWerwNhtdUimysXCg"
         const res = await fetch(`http://10.0.2.2:8080/api/orders/id/${orderId}`, {
             method: "GET",
             headers: {
@@ -206,11 +208,11 @@ export const getOrdersByIdByAdmin = (orderId) => async (dispatch, getState) => {
     }
 }
 
+//admin access
 export const getordersOfUserIdByAdmin = (userId) => async (dispatch, getState) => {
     try {
-        // const token = await AsyncStorage.getItem("token")
+        const token = await AsyncStorage.getItem("token")
         const {orders} = getState().ORDERS
-        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDY1NTA0MiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.YDolQCbjT33XfAaZgUdUZq8GLj_4bOy_vo0O8kpDuptdqOWvFOW4y5scT2Nm90RtsYHl70WfxuKHy_u66X-G_A"
         const res = await fetch(`http://10.0.2.2:8080/api/orders/allByUserId/${userId}`, {
             method: "GET",
             headers: {

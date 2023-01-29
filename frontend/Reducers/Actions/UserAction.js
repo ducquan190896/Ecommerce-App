@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export const LoginUser = (form) => async (dispatch, getState) => {
     try {
+        console.log(form)
         const res = await fetch("http://10.0.2.2:8080/api/users/login", {
             method: "PUT",
             headers: {
@@ -9,8 +10,8 @@ export const LoginUser = (form) => async (dispatch, getState) => {
             },
             body: JSON.stringify(form)
         })
-        console.log(response.headers)
-        await AsyncStorage.setItem("token", response.headers.map["authorization"])
+        console.log( res.headers)
+        await AsyncStorage.setItem("token", res.headers.map["authorization"])
         const data = await res.json()
         console.log(data)
         dispatch({
@@ -35,8 +36,8 @@ export const registerUser = (form) => async (dispatch, getState) => {
             },
             body: JSON.stringify(form)
         })
-        console.log(response.headers)
-        await AsyncStorage.setItem("token", response.headers.map["authorization"])
+        console.log( res.headers.map["authorization"])
+        await AsyncStorage.setItem("token", res.headers.map["authorization"])
         const data = await res.json()
         console.log(data)
         dispatch({
@@ -83,10 +84,10 @@ export const resetUser = () => (dispatch, getState) => {
     dispatch({type: "reset_user"})
 }
 
+//admin access
 export const getListUsers = () => async (dispatch, getState) => {
     try {
-        // const token = await AsyncStorage.getItem("token")
-        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDY1NDI5MywiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.X_oX5opcOBDTHJft7khYpdAAJiBt3fOS1EsDMgX6sUuRJdPNiJA5I8nKf49LYgzzCIff38HAA6RB0OpYudc8uw"
+        const token = await AsyncStorage.getItem("token")
         const res = await fetch("http://10.0.2.2:8080/api/users/all", {
             method: "GET",
             headers: {
@@ -109,10 +110,11 @@ export const getListUsers = () => async (dispatch, getState) => {
         })
     }
 }
+
+//admin access
 export const getListUsersBySearchingName = (name) => async (dispatch, getState) => {
     try {
-           // const token = await AsyncStorage.getItem("token")
-           const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDY1NDI5MywiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.X_oX5opcOBDTHJft7khYpdAAJiBt3fOS1EsDMgX6sUuRJdPNiJA5I8nKf49LYgzzCIff38HAA6RB0OpYudc8uw"
+           const token = await AsyncStorage.getItem("token")
         const res = await fetch(`http://10.0.2.2:8080/api/users/searchName/${name}`, {
             method: "GET",
             headers: {
@@ -136,10 +138,10 @@ export const getListUsersBySearchingName = (name) => async (dispatch, getState) 
     }
 }
 
+//admin access
 export const updateUserToAdmin = (id) => async (dispatch, getState) => {
     try {
-           // const token = await AsyncStorage.getItem("token")
-           const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDY1NDI5MywiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.X_oX5opcOBDTHJft7khYpdAAJiBt3fOS1EsDMgX6sUuRJdPNiJA5I8nKf49LYgzzCIff38HAA6RB0OpYudc8uw"
+        const token = await AsyncStorage.getItem("token")
         const res = await fetch(`http://10.0.2.2:8080/api/users/updateToAdmin/${id}`, {
             method: "PUT",
             headers: {
@@ -166,6 +168,7 @@ export const updateUserToAdmin = (id) => async (dispatch, getState) => {
 export const logOutUser = () => async (dispatch, getState) => {
     try {
         const token = await AsyncStorage.getItem("token")
+        console.log(token)
         await fetch("http://10.0.2.2:8080/logout", {
             method: "GET",
             headers: {
@@ -175,8 +178,7 @@ export const logOutUser = () => async (dispatch, getState) => {
         await AsyncStorage.setItem("token", "")
 
         dispatch({
-            type: "logout_user",
-            payload: data
+            type: "logout_user"
         })
 
     } catch (err) {

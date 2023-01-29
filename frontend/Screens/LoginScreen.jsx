@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useState } from 'react'
@@ -8,12 +8,15 @@ import { Button } from '@rneui/base'
 import { Alert } from 'react-native'
 import { LoginUser, resetUser } from '../Reducers/Actions/UserAction'
 import { useEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import LoadingComponent from '../Components/LoadingComponent'
 
 
 const LoginScreen = () => {
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    const navigation = useNavigation()
     const dispatch = useDispatch()
     const {users, user, userSuccess, userError, message} = useSelector(state => state.USERS)
     const tw = useTailwind()
@@ -21,14 +24,14 @@ const LoginScreen = () => {
         if(!username || !password ) {
             Alert.alert("please fill all infomation required")
         } else {
-            console.log("login successfully")
+          
             setIsLoading(true)
         
             await dispatch(LoginUser({username: username, password: password}))
             setIsLoading(false)
             setUsername(null)
             setPassword(null)
-            //navigation.navigate("Home")
+            
          
         }
        
@@ -37,13 +40,18 @@ const LoginScreen = () => {
         if(userError) {
             Alert.alert("login failed")
         }
-    }, [dispatch, LoginUser, userError])
+        if(userSuccess) {
+            // navigation.navigate("HomeStack", {screen: "Home"})r
+        }
+        
+    }, [dispatch,  userError, userSuccess])
     
     useEffect(() => {
+       
         if(userSuccess ||userError) {
             dispatch(resetUser())
         }
-    }, [userSuccess, userError])
+    }, [dispatch ,userSuccess, userError])
 
     useEffect(() => {
         if(user && userSuccess) {
@@ -62,6 +70,10 @@ const LoginScreen = () => {
                 <TextInput onChangeText={(text) => setUsername(text)} placeholder='Your Username...' value={username} style={tw('w-full font-bold rounded-full border border-2 border-gray-300 py-2 px-8 text-lg mb-4')}></TextInput>
                 <TextInput onChangeText={(text) => setPassword(text)} secureTextEntry={true} placeholder='Your password...' value={password} style={tw('w-full font-bold rounded-full border border-2 border-gray-300 py-2 px-8 text-lg mb-4')} onSubmitEditing={submitFunction}></TextInput>
                 <Button buttonStyle={tw(' rounded-full font-bold text-2xl text-white bg-[#007eb9] py-2 px-4')} title="Sign In" onPress={submitFunction}></Button>
+                <TouchableOpacity onPress={() => navigation.navigate("Register")} style={tw('mt-8')}>
+                    <Text style={tw('text-lg font-bold my-2 text-[#007eb9] ml-2')}>don't have an account
+                      </Text>
+                </TouchableOpacity>
             </View>
         </TouchableWithoutFeedback>    
     </SafeAreaView>

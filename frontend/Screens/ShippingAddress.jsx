@@ -16,6 +16,7 @@ import { Picker } from '@react-native-picker/picker'
 import { addShippingAddress, resetAddress, updateBillingAddress, updateShippingAddress } from '../Reducers/Actions/AddressAction'
 import { Platform } from 'react-native';
 import { Keyboard } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 const ShippingAddress = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -28,6 +29,7 @@ const ShippingAddress = () => {
     const { shippingAddress, billingAddress, address, addressSuccess, addressError, message, billingAddressStatus,  shippingAddressStatus} = useSelector(state => state.ADDRESSES)
     const dispatch = useDispatch()
     const tw = useTailwind()
+    const navigation = useNavigation()
 
     const loadCountries = useCallback(async () => {
         await dispatch(getCountries())
@@ -89,7 +91,7 @@ const ShippingAddress = () => {
     
 
     const goBackFunction = () => {
-         //navigation.navigate("CartScreen")        
+         navigation.navigate("Cart")        
     }
 
     const submitShippingAddress = async () => {
@@ -102,17 +104,17 @@ const ShippingAddress = () => {
                 zipCode: zipCode
             }
           //  console.log(form)
-          if(updateBillingAddress && billingAddress) {
-            setIsLoading(true)
-            await dispatch(updateBillingAddress( billingAddress.id ,form))
-            setIsLoading(false)   
+        //   if(updateBillingAddress && billingAddress) {
+        //     setIsLoading(true)
+        //     await dispatch(updateBillingAddress( billingAddress.id ,form))
+        //     setIsLoading(false)   
             //navigation.navigate("BillingAddressScreen") 
-         }    else {
+        //  }    else {
             setIsLoading(true)
             await dispatch(addShippingAddress(form))
             setIsLoading(false)   
-            //navigation.navigate("BillingAddressScreen")
-         }
+            navigation.navigate("BillingAddress")
+        //  }
          setStreet(null)                        
         setZipCode(null)
 

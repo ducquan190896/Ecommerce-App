@@ -14,20 +14,21 @@ import moment from 'moment'
 import ItemOrderDetail from '../Components/ItemOrderDetail'
 import ErrorComponent from '../Components/ErrorComponent'
 import LoadingComponent from '../Components/LoadingComponent'
+import { useNavigation } from '@react-navigation/native'
 
 
 const OrderDetailScreen = () => {
     const [isLoading, setIsloading] = useState(false)
     const [isError, setIsError] = useState(false)
-    
+   
     const {orders, order, updateOrderStatus, orderSuccess, orderError, message: orderMessage, orderUpdated} = useSelector(state => state.ORDERS)
-    //const navigation = useNavigation()
+    const navigation = useNavigation()
     const tw = useTailwind()
     const dispatch = useDispatch()
 
-    // const params = useRoute()
-    // const {orderId} = params
-    const orderId = 2
+    const{ params} = useRoute()
+    const {orderId} = params
+  
     const loadOder = useCallback( async() => {
         await dispatch(getOrdersByIdByAuth(orderId))
     }, [orderId, dispatch])
@@ -57,7 +58,7 @@ const OrderDetailScreen = () => {
     }, [dispatch, setIsError])
 
     const goBackFunction = () => {
-         //navigation.goBack()
+         navigation.navigate("Cart")
     }
 
     if(isError) {

@@ -17,11 +17,12 @@ export const getReviewByProduct = (id) => async (dispatch, getState) => {
         })
     }
 }
+
+//Authenticated user access
 export const addReview = (obj) => async (dispatch, getState) => {
     try{
-     const token = await AsyncStorage.getItem("token")
-      
-        //console.log(obj)
+        const token = await AsyncStorage.getItem("token")
+
         const res = await fetch("http://10.0.2.2:8080/api/reviews/", {
             method: "POST",
             headers: {

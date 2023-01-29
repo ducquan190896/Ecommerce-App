@@ -91,10 +91,11 @@ export const resetProducts = () => (dispatch, getState) => {
     })
 }
 
+//admin access
 export const updateProduct = (productId, form) => async (dispatch, getState) => {
     try {
-        // const token = await AsyncStorage.getItem("token")
-        const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDY5NDA3NywiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.a32jYmC3rm6VLYFvsnWgcJZ4wEg6LjifkzbQZGcRPrYdhX7LQdPF5xN8gIMcASTn7y11NfpF4WjBvbO1Wx3RDw"
+        const token = await AsyncStorage.getItem("token")
+        
        const {active, unitsInStock, price, description, name, priceDiscounted} = form 
         const res = await fetch(`http://10.0.2.2:8080/api/products/Id/${productId}?unitsInStock=${unitsInStock}&priceDiscounted=${priceDiscounted}&price=${price}&description=${description}&name=${name}&active=${active}`, {
             method: "PUT",
@@ -119,6 +120,8 @@ export const updateProduct = (productId, form) => async (dispatch, getState) => 
         })
     }
 }
+
+//admin access
 export const openUpdateStatus = (updatedProduct) => (dispatch, getState) => {
     dispatch({
         type: "show_update_status",
@@ -126,10 +129,10 @@ export const openUpdateStatus = (updatedProduct) => (dispatch, getState) => {
     })
 }
 
+//admin access
 export const createProduct = (product) => async (dispatch, getState) => {
     try {
-        //   const token = await AsyncStorage.getItem("token")
-          const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDc3NjI1MSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.6BaJXyrg4JwjRv4KLt-ALaobpfdvBDmHwUpsc6np7CzgT_aOHVqzDjpfXwrs47r0mEPSKGWqeNjtO51_lDFICg"
+          const token = await AsyncStorage.getItem("token")
         const res = await fetch("http://10.0.2.2:8080/api/products/", {
             method: "POST",
             headers: {

@@ -50,7 +50,7 @@ public class BackendApplication {
 			Brand nike = new Brand("nike");
 			Brand addidas = new Brand("addidas");
 			Brand newBalance = new Brand("new balance");
-			Brand puma = new Brand("Puma");
+			Brand puma = new Brand("puma");
 			Brand reebok = new Brand("reebok");
 			brandRepos.save(nike);
 			brandRepos.save(addidas);

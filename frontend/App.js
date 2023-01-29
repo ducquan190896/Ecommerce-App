@@ -1,3 +1,4 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StripeProvider } from '@stripe/stripe-react-native';
@@ -6,6 +7,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import {TailwindProvider} from 'tailwind-rn';
 import Store from './Reducers/Store';
+import Route from './Router/Route';
 import AccountScreen from './Screens/AccountScreen';
 import AdminHome from './Screens/AdminHome';
 import BillingAddressScreen from './Screens/BillingAddressScreen';
@@ -28,7 +30,7 @@ import UpdateProductScreenAdmin from './Screens/UpdateProductScreenAdmin';
 import UsersScreenAdmin from './Screens/UsersScreenAdmin';
 import utilities from './tailwind.json';
 
-// const stack = createNativeStackNavigator()
+  const tab = createBottomTabNavigator()
 export default function App() {
   return (
    
@@ -40,19 +42,16 @@ export default function App() {
     >
     <StatusBar backgroundColor='#22e3dd'></StatusBar>
    
-   {/* <NavigationContainer>
-       <stack.Navigator>
-         <stack.Screen options={{headerShown: false}} name="Home" component={Home}></stack.Screen>
-       </stack.Navigator>
-   </NavigationContainer> */}
+   <Route></Route>
+  
    
-   {/* <ProductScreen></ProductScreen> */}
-   {/* <LoginScreen></LoginScreen> */}
-   {/* <RegisterScreen></RegisterScreen> */}
-   {/* <ChangePasswordScreen></ChangePasswordScreen> */}
-   {/* <CartScreen></CartScreen> */}
-   {/* <ShippingAddress></ShippingAddress> */}
-   {/* <BillingAddressScreen></BillingAddressScreen> */}
+   
+  
+   
+   
+   
+   
+  
    {/* <OrdersScreenOfUser></OrdersScreenOfUser> */}
    {/* <OrderDetailScreen></OrderDetailScreen> */}
    {/* <AdminHome></AdminHome> */}
@@ -62,9 +61,9 @@ export default function App() {
    {/* <OrdersScreenOfUserIDByAdmin></OrdersScreenOfUserIDByAdmin> */}
    {/* <ProductsListAdmin></ProductsListAdmin> */}
    {/* <UpdateProductScreenAdmin></UpdateProductScreenAdmin> */}
-   <CreateProductScreenAdmin></CreateProductScreenAdmin>
+   {/* <CreateProductScreenAdmin></CreateProductScreenAdmin> */}
    {/* <PaymentScreen></PaymentScreen> */}
-   {/* <AccountScreen></AccountScreen> */}
+ 
     </StripeProvider>
  
     </Provider>

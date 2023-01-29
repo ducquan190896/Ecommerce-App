@@ -8,6 +8,8 @@ import { Button } from '@rneui/base'
 import { Alert } from 'react-native'
 import { ChangePasswordUser, LoginUser, resetUser } from '../Reducers/Actions/UserAction'
 import { useEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import LoadingComponent from '../Components/LoadingComponent'
 
 
 const ChangePasswordScreen = () => {
@@ -18,6 +20,7 @@ const ChangePasswordScreen = () => {
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
     const {users, user, userSuccess, userError, message} = useSelector(state => state.USERS)
+    const navigation = useNavigation()
     const tw = useTailwind()
     const submitFunction = async () => {
         if( !currentPassword ) {
@@ -26,12 +29,12 @@ const ChangePasswordScreen = () => {
             console.log("login successfully")
             setIsLoading(true)
             // must sign in before invoke th method change password because needs the token from auth user
-            // await dispatch(ChangePasswordUser({ currentPassword: currentPassword, newPassword: newPassword, confirmPassword: confirmPassword}))
+            await dispatch(ChangePasswordUser({ currentPassword: currentPassword, newPassword: newPassword, confirmPassword: confirmPassword}))
             setIsLoading(false)
             setNewPassword(null)
             setCurrentPassword(null)
             setConfirmPassword(null)
-            //navigation.navigate("Home")
+          
          
         }
        
@@ -40,7 +43,10 @@ const ChangePasswordScreen = () => {
         if(userError) {
             Alert.alert("login failed")
         }
-    }, [dispatch, ChangePasswordUser, userError])
+        if(userSuccess) {
+         navigation.navigate("Home")
+        }
+    }, [dispatch, ChangePasswordUser, userError, userSuccess])
     
     useEffect(() => {
         if(userSuccess ||userError) {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useState } from 'react'
@@ -9,6 +9,7 @@ import { Alert } from 'react-native'
 import { LoginUser, registerUser, resetUser } from '../Reducers/Actions/UserAction'
 import { useEffect } from 'react'
 import LoadingComponent from '../Components/LoadingComponent'
+import { useNavigation } from '@react-navigation/native'
 
 
 const RegisterScreen = () => {
@@ -18,6 +19,7 @@ const RegisterScreen = () => {
     const [confirmPassword, setConfirmPassword] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
+    const navigation = useNavigation()
     const {users, user, userSuccess, userError, message} = useSelector(state => state.USERS)
     const tw = useTailwind()
     const submitFunction = async () => {
@@ -35,7 +37,7 @@ const RegisterScreen = () => {
                 setPassword(null)
                 setEmail(null)
                 setConfirmPassword(null)
-                //navigation.navigate("Home")
+               
              
             }
            
@@ -45,8 +47,11 @@ const RegisterScreen = () => {
     useEffect(() => {
         if(userError) {
             Alert.alert("login failed")
+        } 
+        if(userSuccess) {
+            navigation.navigate("HomeStack", {screen: "Home"})
         }
-    }, [dispatch, registerUser, userError])
+    }, [dispatch,  userError, userSuccess])
 
     useEffect(() => {
         if(userSuccess ||userError) {
@@ -74,6 +79,10 @@ const RegisterScreen = () => {
                 <TextInput onChangeText={(text) => setPassword(text)} secureTextEntry={true} placeholder='Your password...' value={password} style={tw('w-full font-bold rounded-full border border-2 border-gray-300 py-2 px-8 text-lg mb-4')} ></TextInput>
                 <TextInput onChangeText={(text) => setConfirmPassword(text)} secureTextEntry={true} placeholder='confirm your password...' value={confirmPassword} style={tw('w-full font-bold rounded-full border border-2 border-gray-300 py-2 px-8 text-lg mb-4')} onSubmitEditing={submitFunction}></TextInput>
                 <Button buttonStyle={tw(' rounded-full font-bold text-2xl text-white bg-[#007eb9] py-2 px-4')} title="Sign Up" onPress={submitFunction}></Button>
+
+                <TouchableOpacity onPress={() => navigation.navigate("Login")} style={tw('mt-8')}>
+                    <Text style={tw('text-lg font-bold my-2 text-[#007eb9] ml-2')}>sign in</Text>
+                </TouchableOpacity>
             </View>
         </TouchableWithoutFeedback>    
     </SafeAreaView>

@@ -9,36 +9,51 @@ import { Button } from '@rneui/base'
 import { logOutUser, resetUser } from '../Reducers/Actions/UserAction'
 import { useEffect } from 'react'
 import { Alert } from 'react-native'
-// import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 const AccountScreen = () => {
 
     const tw = useTailwind()
     const dispatch = useDispatch()
-    // const navigation = useNavigation()
+    const navigation = useNavigation()
 
     const {userSuccess, userError, user, users} = useSelector(state => state.USERS)
 
     useEffect(() => {
+       
         if(userSuccess ||userError) {
             dispatch(resetUser())
         }
     }, [dispatch, userError, userSuccess])
+    useEffect(() => {
+        if(userSuccess) {
+        
+            navigation.navigate("HomeStack", {screen: "Home"})
+         
+        }
+        if(userError) {
+            Alert.alert("action failed")
+            
+        }
+    }, [userSuccess, userError, dispatch])
     
     const goBackFunction = () => {
 
     }
 
     const SignInNavigateFunction = () => {
-            //Navigation.navigate("LoginScreen")
+            navigation.navigate("Login")
     }
     const RegisterNavigateFunction = () => {
-          //Navigation.navigate("RegisterScreen")
+          navigation.navigate("Register")
     }
     const LogOutFunction = async () => {
         await dispatch(logOutUser())
-        Alert("Logout Successfully")
-        //Navigation.navigate("Home")
+        
+       
+    }
+    const changePasswordNavigate =  () => {
+        navigation.navigate("ChangePassWord")
     }
 
     return (
@@ -70,7 +85,10 @@ const AccountScreen = () => {
 
 
                        {user && (
-                        <Button onPress={LogOutFunction} title="Log Out" titleStyle={tw('text-lg text-zinc-700')} buttonStyle={tw('  w-full rounded-md bg-gray-300')}></Button>
+                          <>
+                          <Button onPress={changePasswordNavigate} title="Change Password" titleStyle={tw('text-lg text-zinc-700')} buttonStyle={tw('mt-20  w-full rounded-md bg-amber-300')}></Button>
+                        <Button onPress={LogOutFunction} title="Log Out" titleStyle={tw('text-lg text-zinc-700')} buttonStyle={tw('mt-4  w-full rounded-md bg-gray-300')}></Button>
+                          </>
                        )}
                     </ScrollView>
                 </View>
