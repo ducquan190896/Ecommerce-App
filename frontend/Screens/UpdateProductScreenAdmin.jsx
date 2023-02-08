@@ -9,24 +9,12 @@ import { useEffect } from 'react'
 import { Button, Switch } from '@rneui/base'
 import { resetProducts, updateProduct } from '../Reducers/Actions/ProductActions'
 import { Alert } from 'react-native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 const UpdateProductScreenAdmin = () => {
-    // const params = useRoute()
-    // const {item} = params
-    const item = {
-        active: false, 
-        brandName: "new balance", 
-        categoryName: "glove", 
-        description: "football glove for goalkeeper", 
-        id: 6, 
-        imageUrls: null, 
-        name: "goalkeeper gloves Neuer", 
-        price: 200, 
-        priceDiscounted: 0, 
-        productCode: "000116", 
-        rating: null, 
-        unitsInStock: 100
-        }
+    const {params} = useRoute()
+    const {item} = params
+
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [active, setActive] = useState(item.active)
@@ -38,22 +26,25 @@ const UpdateProductScreenAdmin = () => {
 
     const tw = useTailwind()
     const dispatch = useDispatch()
-    // const navigation = useNavigation()
+    const navigation = useNavigation()
     const {products, updateStatus, updatedProduct, product, productSuccess, productError, message: productMessage, updateStatus: updateProductStatus, brandStatus, nameStatus, categoryStatus } = useSelector(state => state.PRODUCTS)
 
-    // useEffect(() => {
-    //     if(item) {
-    //         setActive(item.active)
-    //         setUnitsInStock(item.unitsInStock.toString())
-    //         setPrice(item.price.toString())
-    //         setPriceDiscounted(item.priceDiscounted.toString())
-    //         setName(item.name)
-    //         setDescription(item.description)
-    //     }
-    // }, [ item])
+
+    const changeName = (text) => {
+        
+        if(text != name) {
+            setName(text)
+            console.log(text)
+        }
+    }
+    const changeDiscountState = (text) => {
+        if(active) {
+            setPriceDiscounted(text);
+        }
+    }
 
     const goBackFunction = () => {
-        //navigation.navigate("")
+        navigation.navigate("AdminProducts")
     }
 
     const changeDiscountedStatus = (value) => {
@@ -65,7 +56,7 @@ const UpdateProductScreenAdmin = () => {
         }
         if(productError) {
             setIsError(true)
-            alert.alert("updating failed")
+            Alert.alert("updating failed")
         }
         if(productSuccess || productError) {
             setTimeout(() => {
@@ -89,10 +80,13 @@ const UpdateProductScreenAdmin = () => {
             unitsInStock: +unitsInStock,
             price: +price,
             description: description,
-            name: name,
             priceDiscounted: +priceDiscounted
 
         }
+        if(item.name != name) {
+            form.name = name
+        }
+        
         setIsLoading(true)
         await dispatch(updateProduct(item.id, form))
         setIsLoading(false)
@@ -122,7 +116,7 @@ const UpdateProductScreenAdmin = () => {
                     <View style={tw("flex-1 items-center justify-center px-2 my-4")}>
                         <View style={tw('flex w-full items-start justify-center')}>
                             <Text style={tw('ml-2 mb-2 font-bold text-lg text-zinc-700')}> Name</Text>   
-                            <TextInput placeholder='Shipping address' style={tw('w-full rounded-md border border-gray-300 text-zinc-700 font-bold text-base py-2 px-4 bg-gray-200 mb-4')} value={name} onChangeText={(text ) => setName(text)}></TextInput>
+                            <TextInput placeholder='Shipping address' style={tw('w-full rounded-md border border-gray-300 text-zinc-700 font-bold text-base py-2 px-4 bg-gray-200 mb-4')} value={name} onChangeText={changeName}></TextInput>
                         </View>
                         <View style={tw('flex w-full items-start justify-center')}>
                             <Text style={tw('ml-2 mb-2 font-bold text-lg text-zinc-700')}>Description</Text>   
@@ -139,12 +133,12 @@ const UpdateProductScreenAdmin = () => {
 
                       
                          
-                       {active && (
+                       {/* {active && ( */}
                          <View style={tw('flex w-full items-start justify-center')}>
                             <Text style={tw('ml-2 mb-2 font-bold text-lg text-zinc-700')}>Discounted Price</Text>   
-                             <TextInput keyboardType='numeric'  style={tw('w-full rounded-md border border-gray-300 text-zinc-700 font-bold text-base py-2 px-4 bg-gray-200 mb-4')} value={priceDiscounted} onChangeText={(text) => setPriceDiscounted(text)}></TextInput>
+                             <TextInput editable={active} selectTextOnFocus={active}  keyboardType='numeric'  style={tw(`w-full rounded-md border border-gray-300 text-zinc-700 font-bold text-base py-2 px-4 ${active ? 'bg-gray-200' : 'bg-gray-400'} mb-4`)} value={priceDiscounted} onChangeText={(text) => setPriceDiscounted(text)}></TextInput>
                         </View>
-                       )}
+                       {/* )} */}
                         
                     
                         <View style={tw('flex w-full items-start justify-center')}>

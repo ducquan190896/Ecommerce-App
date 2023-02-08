@@ -98,12 +98,12 @@
   margin-bottom: 2.5rem
 }
 
-.mb-8 {
-  margin-bottom: 2rem
-}
-
 .mt-4 {
   margin-top: 1rem
+}
+
+.mb-8 {
+  margin-bottom: 2rem
 }
 
 .ml-2 {
@@ -302,6 +302,11 @@
   background-color: rgb(245 158 11 / var(--tw-bg-opacity))
 }
 
+.bg-gray-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity))
+}
+
 .p-2 {
   padding: 0.5rem
 }
@@ -354,8 +359,8 @@
   padding-top: 1rem
 }
 
-.pb-2 {
-  padding-bottom: 0.5rem
+.pb-6 {
+  padding-bottom: 1.5rem
 }
 
 .pt-8 {
@@ -364,6 +369,10 @@
 
 .pb-4 {
   padding-bottom: 1rem
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem
 }
 
 .pl-20 {

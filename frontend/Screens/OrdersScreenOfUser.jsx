@@ -12,6 +12,7 @@ import { Button } from '@rneui/base'
 import ItemOrder from '../Components/ItemOrder'
 import ErrorComponent from '../Components/ErrorComponent'
 import LoadingComponent from '../Components/LoadingComponent'
+import { useNavigation } from '@react-navigation/native'
 
 
 const OrdersScreenOfUser = () => {
@@ -21,14 +22,14 @@ const OrdersScreenOfUser = () => {
     const [isNewOrder, setIsNewOrder] = useState(false)
     const [pastOrders, setPastOrders] = useState(null)
     const [newOrders, setNewOrders] = useState(null)
-    //const navigation = useNavigation()
+    const navigation = useNavigation()
     const tw = useTailwind()
     const dispatch = useDispatch()
     const {orders, order, updateOrderStatus, orderSuccess, orderError, message: orderMessage, orderUpdated} = useSelector(state => state.ORDERS)
 
     const loadOrders = useCallback( async() => {
         await dispatch(getOrdersByAuth())
-    }, [orders, dispatch])
+    }, [orders, dispatch, orderSuccess, order])
 
     const loadPastOrders = useCallback( async () => {
      await setPastOrders(orders.filter(ord => ord.status == "CLOSE"))
@@ -79,7 +80,7 @@ const OrdersScreenOfUser = () => {
     }, [orders, dispatch, loadOrders, setIsNewOrder, isNewOrder])
 
     const goBackFunction = () => {
-        //navigation.navigate("Home")
+        navigation.navigate("HomeStack", {screen: "Home"})
     }
 
     const openPastOrderButton = () => {
@@ -90,15 +91,7 @@ const OrdersScreenOfUser = () => {
         setIsPastOrder(false)
         setIsNewOrder(true)
     }
-    useEffect(() => {
-        console.log( "is newOrder " + isNewOrder)
-       
-    }, [setIsNewOrder, isNewOrder])
-
-    useEffect(() => {
-        console.log("is pastOrder " + isPastOrder)
-       
-    }, [setIsPastOrder, isPastOrder])
+    
     
   if(isError) {
     return <ErrorComponent></ErrorComponent>
@@ -123,9 +116,9 @@ const OrdersScreenOfUser = () => {
                         <AntDesign name="arrowleft" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
-                <View style={tw('flex-row w-full py-2 items-center justify-center my-2')}>
-                    <Button onPress={openPastOrderButton} titleStyle={tw('text-[#22e3dd] text-lg font-bold ')}  buttonStyle={[tw(` px-10 rounded-lg bg-white   py-2 ${isPastOrder ? "  border-b-2" : "border-0"}`), {borderColor : isPastOrder ? "#22e3dd" : null}]}  title="Past Orders"></Button>
-                    <Button onPress={openNewOrderButton} titleStyle={tw('text-[#22e3dd] text-lg font-bold ')}  buttonStyle={[tw(`px-10 rounded-lg bg-white   py-2 ${isNewOrder ?  "  border-b-2" : "border-0" }`), , {borderColor : isNewOrder ? "#22e3dd" : null}]}  title="New Orders"></Button>
+                <View style={tw('flex-row  w-full py-2 items-center justify-center my-2')}>
+                    <Button onPress={openPastOrderButton} titleStyle={tw('text-[#22e3dd] text-lg font-bold ')}  buttonStyle={[tw(` px-10  bg-white   py-2 ${isPastOrder ? "  border-b-2" : "border-0"}`), {borderColor : isPastOrder ? "#22e3dd" : null}]} containerStyle={tw('w-1/2')} title="Past Orders"></Button>
+                    <Button onPress={openNewOrderButton} titleStyle={tw('text-[#22e3dd] text-lg font-bold ')}  buttonStyle={[tw(`px-10  bg-white   py-2 ${isNewOrder ?  "  border-b-2" : "border-0" }`), , {borderColor : isNewOrder ? "#22e3dd" : null}]}  containerStyle={tw('w-1/2')}   title="New Orders"></Button>
                 </View>   
                 <ScrollView showsVerticalScrollIndicator={false} style={tw('flex-1 px-2 pt-4 pb-2')}>
                     {isPastOrder && pastOrders && pastOrders.length > 0 && pastOrders.map(ord => <ItemOrder key={ord.id} item={ord}></ItemOrder>) }

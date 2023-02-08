@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 product: action.payload,
-                products: state.products.push(action.payload),
+                products: [...state.products, action.payload],
                 productSuccess: true
             }
          case "get_products_category":

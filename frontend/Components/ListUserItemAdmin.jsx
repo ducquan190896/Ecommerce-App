@@ -7,17 +7,18 @@ import { AntDesign } from '@expo/vector-icons';
 import { updateUserToAdmin } from '../Reducers/Actions/UserAction'
 import { useState } from 'react'
 import LoadingComponent from './LoadingComponent'
+import { useNavigation } from '@react-navigation/native'
 
 const ListUserItemAdmin = ({user}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const tw = useTailwind()
     const dispatch = useDispatch()
-    // const navigation = useNavigation()
+    const navigation = useNavigation()
     const {email, username, id, role} = user
 
     const navigateFunctionToOrderByUserId = () => {
-        //navigation.navigate("OrdersScreenOfUserIDByAdmin", {userId: id, username: username})
+        navigation.navigate("AdminOrdersOfUser", {userId: id, username: username})
     }
     const updateToAdminFunction =  () => {
         setIsLoading(true)

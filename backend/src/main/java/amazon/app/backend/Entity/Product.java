@@ -72,6 +72,7 @@ public class Product {
     @CollectionTable(
         name = "image",
         joinColumns = @JoinColumn(name = "student_id")
+        // joinColumns = @JoinColumn(name = "product_id")
     )
     @Column(name = "image_url")
     private List<String> imageUrls = new ArrayList<>();
@@ -87,6 +88,7 @@ public class Product {
     @Column(name = "rating")
     private Integer rating;
     
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @CreationTimestamp
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
@@ -96,7 +98,7 @@ public class Product {
     @Column(name = "date_updated")
     private LocalDateTime dateUpdated;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;

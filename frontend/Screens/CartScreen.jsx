@@ -19,6 +19,7 @@ const CartScreen = () => {
     const navigation = useNavigation()
     const {cart, cartSuccess, cartError, message} = useSelector(state => state.CARTS)
     const {user, userSuccess, userError} = useSelector(state => state.USERS)
+    const {orders, order, orderSuccess, orderError} = useSelector(state => state.ORDERS) 
      const loadCart = useCallback(async () => {
        await dispatch(getAuthUserCart())
     }, [dispatch, cart, user])

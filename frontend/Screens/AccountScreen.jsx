@@ -25,17 +25,17 @@ const AccountScreen = () => {
             dispatch(resetUser())
         }
     }, [dispatch, userError, userSuccess])
-    useEffect(() => {
-        if(userSuccess) {
+    // useEffect(() => {
+    //     if(userSuccess) {
         
-            navigation.navigate("HomeStack", {screen: "Home"})
+    //         navigation.navigate("HomeStack", {screen: "Home"})
          
-        }
-        if(userError) {
-            Alert.alert("action failed")
+    //     }
+    //     if(userError) {
+    //         Alert.alert("action failed")
             
-        }
-    }, [userSuccess, userError, dispatch])
+    //     }
+    // }, [userSuccess, userError, dispatch])
     
     const goBackFunction = () => {
 

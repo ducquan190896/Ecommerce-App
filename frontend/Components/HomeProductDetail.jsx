@@ -23,7 +23,7 @@ const HomeProductDetail = ({item}) => {
         
         <View style={tw('pl-4 py-2 w-1/2 items-start justify-center')}>
             <Text style={tw('text-lg font-bold text-[#111111] mb-2')}>{item.name}</Text>
-            {item.rating != null ? <RatingComponent rating={item.rating}></RatingComponent> : <RatingComponent rating={5}></RatingComponent>}
+            {item.rating != null  && item.rating > 0 ? <RatingComponent rating={item.rating}></RatingComponent> : <RatingComponent rating={5}></RatingComponent>}
 
             <View style={tw('mb-2 flex flex-row items-center justify-center')}>
                 <Text style={[tw('text-base ')]} >Price:  </Text>  

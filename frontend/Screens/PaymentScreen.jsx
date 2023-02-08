@@ -9,8 +9,8 @@ import { Button } from '@rneui/base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import { useEffect } from 'react';
-import { getAuthUserCart } from '../Reducers/Actions/CartAction';
-import { createOrder } from '../Reducers/Actions/OrderAction';
+import { ClearCart, getAuthUserCart } from '../Reducers/Actions/CartAction';
+import { createOrder, resetOrder } from '../Reducers/Actions/OrderAction';
 import { useNavigation } from '@react-navigation/native';
 const PaymentScreen = () => {
     const [isReady, setIsReady] = useState(false)
@@ -38,13 +38,27 @@ const PaymentScreen = () => {
         }
     }, [dispatch, cart, loadCartByAuth])
     useEffect(() => {
-        if(orderSuccess && order) {
-            navigation.navigate("OrderDetail", {orderId: order.id})
-        }
+        if( orderSuccess) {
+            console.log("navigate to order detail screen")
+            
+            navigation.navigate("OrderStack", {
+                screen: "OrderDetail",
+                params: {
+                    orderId: order?.id
+                }
+            })
+            
+            
+           }
         if(orderError) {
             Alert.alert("Creating order failed")
         }
-    }, [orderSuccess, orderError, order, dispatch])
+    }, [dispatch, createOrder, order])
+    useEffect(() => {
+        if(orderError || orderSuccess) {
+            dispatch(resetOrder())
+        }
+    }, [orderError, orderSuccess, dispatch])
 
     const fetchPaymentIntentClientSecret = async () => {
         const amount = totalPrice;
@@ -99,7 +113,18 @@ const PaymentScreen = () => {
             Alert.alert("payment failed")
         } else if(paymentIntent) {
             console.log(paymentIntent)        
-            dispatch(createOrder(billingAddress.id, shippingAddress.id))
+           dispatch(createOrder(billingAddress.id, shippingAddress.id))
+           .then(() => {
+            dispatch(ClearCart())
+            // navigation.navigate("OrderStack", {
+            //     screen: "OrderDetail",
+            //     params: {
+            //         orderId: order?.id
+            //     }
+            // })
+           })
+            
+        
         }    
     }
     };

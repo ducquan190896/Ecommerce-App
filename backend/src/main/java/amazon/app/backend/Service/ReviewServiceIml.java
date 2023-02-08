@@ -89,10 +89,10 @@ public class ReviewServiceIml  implements ReviewService{
        reviewRepos.save(review);
       user.getReviews().add(review);
       product.getReviews().add(review);
-      if(product.getRating() == null) {
-        product.setRating(review.getRating());
+      if(product.getRating() != null && product.getRating() > 0) {
+        product.setRating((product.getRating() + reviewRequest.getRating())/ 2);
       } else {
-        product.setRating((product.getRating() + review.getRating())/ 2);
+        product.setRating(reviewRequest.getRating());
       }
      
       productRepos.save(product);

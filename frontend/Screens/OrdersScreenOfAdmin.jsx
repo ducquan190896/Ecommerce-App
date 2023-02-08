@@ -14,6 +14,7 @@ import ErrorComponent from '../Components/ErrorComponent'
 import LoadingComponent from '../Components/LoadingComponent'
 import ItemOrder from '../Components/ItemOrder'
 import ItemOrderAdmin from '../Components/ItemOrderAdmin'
+import { useNavigation } from '@react-navigation/native'
 
 const OrdersScreenOfAdmin = () => {
     const [isPastOrder, setIsPastOrder] = useState(true)
@@ -24,7 +25,7 @@ const OrdersScreenOfAdmin = () => {
     const tw = useTailwind()
     const dispatch = useDispatch()
     const {orders, closeOrders, openOrders, order, updateOrderStatus, orderSuccess, orderError, message: orderMessage, orderUpdated} = useSelector(state => state.ORDERS)
-    // const navigation = useNavigation
+    const navigation = useNavigation()
 
     const loadCloseOrders = useCallback(async () => {
         await dispatch(getCloseOrdersByAdmin())
@@ -63,7 +64,7 @@ const OrdersScreenOfAdmin = () => {
 
 
     const goBackFunction = () => {
-        //navigation.navigate("Home")
+        navigation.navigate("AdminHome")
     }
     const openPastOrderButton =  () => {
        setIsNewOrder(false)

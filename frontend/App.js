@@ -52,8 +52,8 @@ export default function App() {
    
    
   
-   {/* <OrdersScreenOfUser></OrdersScreenOfUser> */}
-   {/* <OrderDetailScreen></OrderDetailScreen> */}
+   
+
    {/* <AdminHome></AdminHome> */}
    {/* <OrdersScreenOfAdmin></OrdersScreenOfAdmin> */}
    {/* <OrderDetailScreenAdmin></OrderDetailScreenAdmin> */}
@@ -62,7 +62,7 @@ export default function App() {
    {/* <ProductsListAdmin></ProductsListAdmin> */}
    {/* <UpdateProductScreenAdmin></UpdateProductScreenAdmin> */}
    {/* <CreateProductScreenAdmin></CreateProductScreenAdmin> */}
-   {/* <PaymentScreen></PaymentScreen> */}
+   
  
     </StripeProvider>
  

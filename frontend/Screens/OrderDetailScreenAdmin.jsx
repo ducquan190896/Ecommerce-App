@@ -14,21 +14,24 @@ import moment from 'moment'
 import ItemOrderDetail from '../Components/ItemOrderDetail'
 import ErrorComponent from '../Components/ErrorComponent'
 import LoadingComponent from '../Components/LoadingComponent'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 const OrderDetailScreenAdmin = () => {
     const [isLoading, setIsloading] = useState(false)
     const [isError, setIsError] = useState(false)
     
     const {orders, order, updateOrderStatus, orderSuccess, orderError, message: orderMessage, orderUpdated} = useSelector(state => state.ORDERS)
-    //const navigation = useNavigation()
+    const navigation = useNavigation()
     const tw = useTailwind()
     const dispatch = useDispatch()
 
-    // const params = useRoute()
-    // const {orderId} = params
-    const orderId = 8
+    const {params} = useRoute()
+    const {orderId} = params
+   
     const loadOder = useCallback( async() => {
-        await dispatch(getOrdersByIdByAdmin(orderId))
+        if(orderId) {
+            await dispatch(getOrdersByIdByAdmin(orderId))
+        }
     }, [orderId, dispatch, order])
 
     useEffect(() => {
@@ -51,13 +54,13 @@ const OrderDetailScreenAdmin = () => {
     useEffect(() => {    
         setTimeout(() => {
             setIsError(false)
-            loadOder()
+            // loadOder()
         }, 3000);
     
     }, [dispatch, setIsError])
 
     const goBackFunction = () => {
-         //navigation.goBack()
+         navigation.goBack()
     }
 
     const CompleteDeliveryFunction = async () => {

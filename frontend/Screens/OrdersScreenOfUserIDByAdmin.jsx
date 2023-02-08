@@ -13,27 +13,29 @@ import ItemOrder from '../Components/ItemOrder'
 import ErrorComponent from '../Components/ErrorComponent'
 import LoadingComponent from '../Components/LoadingComponent'
 import ItemOrderAdmin from '../Components/ItemOrderAdmin'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 
 const OrdersScreenOfUserIDByAdmin = () => {
 
-    // const params = useRoute()
-    // const {userId, username} = params
-    const userId = 1;
-    const username = "quan"
+    const {params}= useRoute()
+    const {userId, username} = params
+    
     const [isLoading, setIsloading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [isPastOrder, setIsPastOrder] = useState(true)
     const [isNewOrder, setIsNewOrder] = useState(false)
     const [pastOrders, setPastOrders] = useState(null)
     const [newOrders, setNewOrders] = useState(null)
-    //const navigation = useNavigation()
+    const navigation = useNavigation()
     const tw = useTailwind()
     const dispatch = useDispatch()
     const {orders, order, updateOrderStatus, orderSuccess, orderError, message: orderMessage, orderUpdated} = useSelector(state => state.ORDERS)
 
     const loadOrders = useCallback( async() => {
-        await dispatch(getordersOfUserIdByAdmin(userId))
+        if(userId) {
+            await dispatch(getordersOfUserIdByAdmin(userId))
+        }
     }, [orders, dispatch])
 
     const loadPastOrders = useCallback( async () => {
@@ -85,7 +87,7 @@ const OrdersScreenOfUserIDByAdmin = () => {
     }, [orders, dispatch, loadOrders, setIsNewOrder, isNewOrder])
 
     const goBackFunction = () => {
-        //navigation.navigate("Home")
+        navigation.navigate("AdminUsers")
     }
 
     const openPastOrderButton = () => {

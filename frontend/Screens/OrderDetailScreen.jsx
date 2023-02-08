@@ -14,7 +14,7 @@ import moment from 'moment'
 import ItemOrderDetail from '../Components/ItemOrderDetail'
 import ErrorComponent from '../Components/ErrorComponent'
 import LoadingComponent from '../Components/LoadingComponent'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 
 const OrderDetailScreen = () => {
@@ -58,7 +58,7 @@ const OrderDetailScreen = () => {
     }, [dispatch, setIsError])
 
     const goBackFunction = () => {
-         navigation.navigate("Cart")
+         navigation.navigate("Orders")
     }
 
     if(isError) {

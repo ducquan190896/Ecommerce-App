@@ -11,7 +11,7 @@ import { useTailwind } from 'tailwind-rn/dist'
 import ImageSwipeDot from '../Components/ImageSwipeDot'
 import { Button } from '@rneui/base'
 import RatingComponent from '../Components/RatingComponent'
-import { addReview, getReviewByProduct } from '../Reducers/Actions/ReviewAction'
+import { addReview, getReviewByProduct, resetReview } from '../Reducers/Actions/ReviewAction'
 import LoadingComponent from '../Components/LoadingComponent'
 import ReviewComponent from '../Components/ReviewComponent'
 import { Picker } from '@react-native-picker/picker'
@@ -51,11 +51,11 @@ const ProductScreen = () => {
 
     const loadProductById = useCallback(async () => {
         await dispatch(getProductById(productId))
-    }, [productId, product,  dispatch])
+    }, [productId, product,  dispatch, review, reviewSuccess])
 
     const loadReviews = useCallback(async () => {
         await dispatch(getReviewByProduct(product.id))
-    }, [productId ,product, dispatch, reviews])
+    }, [productId ,product, dispatch, reviews, review])
 
     useEffect(() => {
         
@@ -64,7 +64,7 @@ const ProductScreen = () => {
         loadProductById().then(() => loadReviews()).then(() => setIsLoading(false)).catch(() => setIsError(true))
        }
         
-    }, [productId])
+    }, [productId, review, dispatch])
 
     useEffect(() => {
         if(productError ||reviewError) {
@@ -79,6 +79,12 @@ const ProductScreen = () => {
             dispatch(resetProducts())
         }
     }, [ dispatch, productSuccess, productError])
+
+    useEffect(() => {
+        if(reviewSuccess || reviewError) {
+            dispatch(resetReview())
+        }
+    }, [ dispatch, reviewSuccess, reviewError])
     
   
     const loadProducts = async () => {
@@ -153,11 +159,11 @@ const ProductScreen = () => {
   if(isLoading) {
     return <LoadingComponent></LoadingComponent>
   }
-  if(!isLoading && reviews.length <= 0) {
+  if(!isLoading && product == null) {
    return (
     <SafeAreaView style={tw('flex-1 items-center justify-center')}>
         
-    <Text style={tw('text-2xl font-bold text-[#007eb9]')}>No Products</Text>
+    <Text style={tw('text-2xl font-bold text-[#007eb9]')}>No Product</Text>
   </SafeAreaView >
    )
   } 
@@ -205,7 +211,7 @@ const ProductScreen = () => {
                   </View>
                 )}
                 <View style={tw('ml-2')}>
-                  <RatingComponent rating={product.rating ? product.rating : 5}></RatingComponent>
+                  <RatingComponent rating={product.rating != null && product.rating > 0 ? product.rating : 5}></RatingComponent>
                 </View>
               
                 <Text style={tw('text-lg my-2 text-black ml-2')}>{product.description}

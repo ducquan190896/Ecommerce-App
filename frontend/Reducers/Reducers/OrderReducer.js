@@ -47,15 +47,15 @@ export default (state = initialState, action) => {
                 ...state,
                 order: action.payload,
                 orderSuccess: true,
-                // closeOrders: state.closeOrders.push(action.payload),
-                // openOrders: state.openOrders.filter(ord => ord.id != action.payload.id)
+                closeOrders: [...state.orders, action.payload],
+                openOrders: state.openOrders.filter(ord => ord.id != action.payload.id)
             }
         case "create_order":
             return {
                 ...state,
                 order: action.payload,
                 orderSuccess: true,
-                openOrders: state.openOrders.push(action.payload)
+                orders: state.orders.push(action.payload)
             }
         case "order_error":
             return {

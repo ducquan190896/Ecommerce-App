@@ -88,7 +88,8 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    loadCategories().then(() => loadCategories()).then(() => loadBrands()).then(() => loadProducts()).then(() => setIsLoading(false)).catch(err => setIsError(true)) 
+    // loadCategories().then(() => loadCategories()).then(() => loadBrands()).then(() => loadProducts()).then(() => setIsLoading(false)).catch(err => setIsError(true)) 
+    loadCategories().then(() => loadBrands()).then(() => loadProducts()).then(() => setIsLoading(false)).catch(err => setIsError(true)) 
     if(brands && brands.length > 0) {
       console.log(brands)
     }

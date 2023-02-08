@@ -39,25 +39,23 @@ const LoginScreen = () => {
     useEffect(() => {
         if(userError) {
             Alert.alert("login failed")
+            dispatch(resetUser())
         }
         if(userSuccess) {
-            // navigation.navigate("HomeStack", {screen: "Home"})r
+            navigation.navigate("AccountScreen")
+            dispatch(resetUser())
         }
         
     }, [dispatch,  userError, userSuccess])
     
-    useEffect(() => {
+    // useEffect(() => {
        
-        if(userSuccess ||userError) {
-            dispatch(resetUser())
-        }
-    }, [dispatch ,userSuccess, userError])
+    //     if(userSuccess ||userError) {
+    //         dispatch(resetUser())
+    //     }
+    // }, [dispatch ,userSuccess, userError])
 
-    useEffect(() => {
-        if(user && userSuccess) {
-            console.log(user)
-        }
-    }, [user, userSuccess, dispatch])
+   
 
     if(isLoading) {
         return <LoadingComponent></LoadingComponent>

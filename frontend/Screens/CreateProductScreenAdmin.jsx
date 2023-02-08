@@ -11,6 +11,7 @@ import { createProduct, resetProducts, updateProduct } from '../Reducers/Actions
 import { Alert } from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
 
 const CreateProductScreenAdmin = () => {
     
@@ -27,18 +28,19 @@ const CreateProductScreenAdmin = () => {
 
     const tw = useTailwind()
     const dispatch = useDispatch()
-    // const navigation = useNavigation()
+    const navigation = useNavigation()
     const {products, updateStatus, updatedProduct, product, productSuccess, productError, message: productMessage, updateStatus: updateProductStatus, brandStatus, nameStatus, categoryStatus } = useSelector(state => state.PRODUCTS)
 
   
 
     const goBackFunction = () => {
-        //navigation.navigate("")
+        navigation.navigate("AdminProducts")
     }
 
     useEffect(() => {
         if(productSuccess) {
             Alert.alert("updated successfully")
+        
         }
         if(productError) {
             setIsError(true)
@@ -50,7 +52,7 @@ const CreateProductScreenAdmin = () => {
             }, 3000);
         }
 
-    }, [productSuccess, productError])
+    }, [productSuccess, productError, createProduct])
 
     useEffect(() => {
         if(isError) {
@@ -77,7 +79,7 @@ const CreateProductScreenAdmin = () => {
           })
           console.log(images)
           const token = await AsyncStorage.getItem("token")
-        // const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY3NDc3NjI1MSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdfQ.6BaJXyrg4JwjRv4KLt-ALaobpfdvBDmHwUpsc6np7CzgT_aOHVqzDjpfXwrs47r0mEPSKGWqeNjtO51_lDFICg"
+       
 
         const formdata = new FormData()
         let n = 0;

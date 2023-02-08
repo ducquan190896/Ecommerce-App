@@ -15,7 +15,7 @@ const CartStack = () => {
         <stack.Screen options={{headerShown: false}} name="BillingAddress" component={BillingAddressScreen}></stack.Screen>
         <stack.Screen options={{headerShown: false}} name="ShippingAddress" component={ShippingAddress}></stack.Screen>
         <stack.Screen options={{headerShown: false}} name="PaymentScreen" component={PaymentScreen}></stack.Screen>
-        <stack.Screen options={{headerShown: false}} name="OrderDetail" component={OrderDetailScreen}></stack.Screen>
+        
     </stack.Navigator>
   )
 }

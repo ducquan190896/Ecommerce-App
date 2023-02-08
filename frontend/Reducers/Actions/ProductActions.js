@@ -95,9 +95,21 @@ export const resetProducts = () => (dispatch, getState) => {
 export const updateProduct = (productId, form) => async (dispatch, getState) => {
     try {
         const token = await AsyncStorage.getItem("token")
-        
+        console.log(form)
        const {active, unitsInStock, price, description, name, priceDiscounted} = form 
-        const res = await fetch(`http://10.0.2.2:8080/api/products/Id/${productId}?unitsInStock=${unitsInStock}&priceDiscounted=${priceDiscounted}&price=${price}&description=${description}&name=${name}&active=${active}`, {
+       
+    //    &priceDiscounted=${priceDiscounted}
+        
+        let url = `http://10.0.2.2:8080/api/products/Id/${productId}?unitsInStock=${unitsInStock}&price=${price}&description=${description}&active=${active}`;
+
+        if(active) {
+            url = url + `&priceDiscounted=${priceDiscounted}`
+        }
+        if(name) {
+            url =  url + `&name=${name}`
+        }
+      
+        const res = await fetch(url, {
             method: "PUT",
             headers: {
                 "Authorization": token

@@ -17,6 +17,7 @@ import { getCategories } from '../Reducers/Actions/CategoryAction'
 import { Keyboard } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'; 
 import ProductListCardAdmin from '../Components/ProductListCardAdmin'
+import { useNavigation } from '@react-navigation/native'
 //import Categories from "../DummyData/Categories.json"
 //import Brands from "../DummyData/Brands.json"
 
@@ -28,7 +29,7 @@ const ProductsListAdmin = () => {
     const [showHome, setShowHome] = useState(false)
     const tw = useTailwind()
     const dispatch = useDispatch()
-    // const navigation = useNavigation()
+    const navigation = useNavigation()
     const {products, product, productSuccess, productError, message: productMessage, updateStatus: updateProductStatus, brandStatus, nameStatus, categoryStatus } = useSelector(state => state.PRODUCTS)
   
     
@@ -66,8 +67,12 @@ const ProductsListAdmin = () => {
   
     
     const goBackFunction = () => {
-        //navigation.navigate("")
+        navigation.navigate("AdminHome")
     }
+
+    const goAdminProductCreate = () => {
+      navigation.navigate("AdminProductCreate")
+  }
 
   
     if(isError) {
@@ -102,7 +107,7 @@ const ProductsListAdmin = () => {
                         <TouchableOpacity onPress={goBackFunction} activeOpacity={0.5} style={tw('absolute top-4 left-2')}>
                             <AntDesign name="arrowleft" size={30} color="black" />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={goBackFunction} activeOpacity={0.5} style={tw('absolute top-4 right-4')}>
+                        <TouchableOpacity onPress={goAdminProductCreate} activeOpacity={0.5} style={tw('absolute top-4 right-4')}>
                             <AntDesign name="addfolder" size={40} color="black" />
                         </TouchableOpacity>
 

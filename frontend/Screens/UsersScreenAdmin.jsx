@@ -13,6 +13,7 @@ import ErrorComponent from '../Components/ErrorComponent'
 import LoadingComponent from '../Components/LoadingComponent'
 import { getListUsers, getListUsersBySearchingName, resetUser } from '../Reducers/Actions/UserAction'
 import ListUserItemAdmin from '../Components/ListUserItemAdmin'
+import { useNavigation } from '@react-navigation/native'
 
 const UsersScreenAdmin = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -20,8 +21,8 @@ const UsersScreenAdmin = () => {
   const [name, setName] = useState(null)
   const tw = useTailwind()
   const dispatch = useDispatch()
-
-  const {users, userSuccess, userError, message: userMessage} = useSelector(state => state.USERS)
+  const navigation = useNavigation()
+  const {users, user, userSuccess, userError, message: userMessage} = useSelector(state => state.USERS)
 
   const loadUsers = useCallback(async () => {
     await dispatch(getListUsers())
@@ -36,19 +37,19 @@ const UsersScreenAdmin = () => {
     loadUsers().then(() => setIsLoading(false))
   }, [dispatch])
 
-  useEffect(() => {
-    if(name == null) {
-      setIsLoading(true)
-      loadUsers().then(() => setIsLoading(false))
-    }
-  }, [name, setName, dispatch])
+  // useEffect(() => {
+  //   if(name == null) {
+  //     setIsLoading(true)
+  //     loadUsers().then(() => setIsLoading(false))
+  //   }
+  // }, [name, setName, dispatch])
 
-  useEffect(() => {
-    if(users && users.length > 0) {
-      console.log("check user state")
-      console.log(users)
-    }
-  }, [dispatch, users])
+  // useEffect(() => {
+  //   if(users && users.length > 0) {
+  //     console.log("check user state")
+  //     console.log(users)
+  //   }
+  // }, [dispatch, users])
 
   useEffect(() => {
       if(userError ||userSuccess) {
@@ -75,7 +76,7 @@ const UsersScreenAdmin = () => {
   
 
   const goBackFunction = () => {
-    //navigation.navigate("Home")
+    navigation.navigate("AdminHome")
 } 
   const searchFunction = async () => {
     
@@ -124,7 +125,7 @@ const UsersScreenAdmin = () => {
           </View> 
           <ScrollView showsVerticalScrollIndicator={false} style={tw('flex-1 px-2 pt-4 pb-2')}>
            {!isLoading && users.length <= 0 &&  <Text style={tw('text-2xl w-full text-center font-bold text-red-500')}>No users</Text>}
-            {users && users.length > 0 && users.map(us => <ListUserItemAdmin key={us.id} user={us}></ListUserItemAdmin>)}
+            {users && users.length > 0 && users.filter(usa => usa.id != user.id).map(us => <ListUserItemAdmin key={us.id} user={us}></ListUserItemAdmin>)}
           </ScrollView>
       </View>
       </TouchableWithoutFeedback>

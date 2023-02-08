@@ -10,7 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 const stack = createNativeStackNavigator()
 const AccountStack = () => {
   return (
-    <stack.Navigator>
+    <stack.Navigator initialRouteName='AccountScreen'>
         <stack.Screen options={{headerShown: false}} name="AccountScreen" component={AccountScreen}></stack.Screen>
         <stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen}></stack.Screen>
         <stack.Screen options={{headerShown: false}} name="Register" component={RegisterScreen}></stack.Screen>

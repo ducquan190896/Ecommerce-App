@@ -7,21 +7,22 @@ import { Foundation } from '@expo/vector-icons';
 import { Button } from '@rneui/base';
 import { useDispatch } from 'react-redux';
 import { openUpdateStatus } from '../Reducers/Actions/ProductActions';
+import { useNavigation } from '@react-navigation/native';
 
 
 const ProductListCardAdmin = ({item}) => {
     const tw = useTailwind()
-    // const navigation = useNavigation()
+    const navigation = useNavigation()
     const dispatch = useDispatch()
 
     const navigateToProductFunction = () => {
-      //navigation.navigate("ProductScreen", {productId : item.id})
+      // navigation.navigate("ProductScreen", {productId : item.id})
     }
 
     const updatefunction = () => {
         dispatch(openUpdateStatus(item))
         console.log(item)
-        //navigation.navigate("updateProductScreen", {item: item})
+        navigation.navigate("AdminProductUpdate", {item: item})
     }
 
   return (

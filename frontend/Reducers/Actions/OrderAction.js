@@ -22,7 +22,7 @@ export const createOrder = (billingAddressId, shippingAddressId) => async (dispa
         console.log(data)
 
         dispatch({
-            type: "get_authUser_orders",
+            type: "create_order",
             payload: data
         })
 

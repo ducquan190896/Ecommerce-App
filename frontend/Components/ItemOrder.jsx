@@ -4,16 +4,17 @@ import { useTailwind } from 'tailwind-rn/dist'
 import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { AntDesign } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/native'
 
 const ItemOrder = ({item}) => {
     const tw = useTailwind()
     const dispatch = useDispatch()
-    // const navigation = useNavigation()
+    const navigation = useNavigation()
     const {id, username, email, trackingNumber, status, totalPrice, totalQuantity, dateCreated, dateUpdated} = item
 
 
     const navigateScreenFunction = () => {
-        //navigation.navigate("OrderDetailScreen", {orderId: id})
+        navigation.navigate("OrderDetail", {orderId: id})
     }
 
   return (
